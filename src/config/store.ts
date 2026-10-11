@@ -1,6 +1,7 @@
 /**
  * Merchant configuration. Leave unknown values as null.
- * Do not invent a legal name, address, VAT ID, shipping promise, or tax rate.
+ * Do not invent a legal name, street address, VAT ID, or tax rate.
+ * Shipping and returns below are the published Germany policy.
  *
  * The store stays in preview until `readyForLaunch` is set true AND
  * `launchBlockers()` in src/lib/commerce.ts returns an empty list.
@@ -27,11 +28,10 @@ export const storeConfig = {
 
   announcement: {
     /**
-     * Sample offer. Stays hidden until this flag is true AND shipping is confirmed
-     * with a matching free-shipping threshold. Do not enable on the strength of the sample sentence alone.
+     * Published only when shipping is confirmed and every Germany order ships free.
      */
-    enabled: false as boolean,
-    text: "Kostenloser Versand ab 100 €",
+    enabled: true as boolean,
+    text: "Kostenloser Versand",
   },
 
   business: {
@@ -51,25 +51,38 @@ export const storeConfig = {
   },
 
   shipping: {
-    confirmed: false as boolean,
-    countries: null as string[] | null,
-    chargesSummary: null as string | null,
-    deliveryEstimate: null as string | null,
-    origin: null as string | null,
-    processingTime: null as string | null,
-    trackingAvailable: null as boolean | null,
-    freeShippingFromEur: null as number | null,
-    /** Included in the Google feed only when confirmed. */
-    feed: null as null | { country: string; service: string; priceEur: number },
+    confirmed: true as boolean,
+    countries: ["Deutschland"] as string[] | null,
+    countryCode: "DE",
+    /** Charge for one shipment inside Germany. Zero means every order ships free. */
+    flatRateEur: 0,
+    freeShippingFromEur: 0 as number | null,
+    chargesSummary: "Kostenloser Versand für jede Bestellung nach Deutschland.",
+    deliveryEstimate:
+      "Voraussichtlich 3–8 Werktage: 1–3 Werktage Bearbeitung und danach 2–5 Werktage Transport.",
+    origin: "Deutschland",
+    processingTime:
+      "1–3 Werktage, Montag bis Freitag. Bestellungen bis 14:00 Uhr (Europe/Berlin) beginnen am selben Werktag.",
+    trackingAvailable: true as boolean | null,
+    cutoff: "14:00",
+    timezone: "Europe/Berlin",
+    handlingMinDays: 1,
+    handlingMaxDays: 3,
+    transitMinDays: 2,
+    transitMaxDays: 5,
+    feedService: "Standard",
   },
 
   returns: {
-    confirmed: false as boolean,
-    period: null as string | null,
-    procedure: null as string | null,
-    refundMethod: null as string | null,
-    refundTiming: null as string | null,
-    returnShippingCost: null as string | null,
+    confirmed: true as boolean,
+    period: "14 Tage ab dem Tag, an dem die Ware eingegangen ist",
+    procedure:
+      "Widerruf in Textform an die Kontaktdaten im Impressum, danach frankierte Rücksendung der Ware innerhalb von 14 Tagen nach dem Widerruf.",
+    refundMethod: "Erstattung auf dem ursprünglichen Zahlungsweg",
+    refundTiming:
+      "Innerhalb von 14 Tagen nach Zugang des Widerrufs. Die Erstattung kann zurückgehalten werden, bis die Ware wieder bei uns ist oder du einen Nachweis der Rücksendung geschickt hast.",
+    returnShippingCost:
+      "Du trägst die unmittelbaren Kosten der Rücksendung. Ist die Ware mangelhaft oder falsch geliefert, tragen wir die Rücksendekosten.",
     returnAddress: null as string | null,
     supportContact: null as string | null,
   },

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
-import { MAX_CART_QUANTITY } from "@/lib/cart";
+import { getProductBySku } from "@/data/catalog";
+import { quantityCap } from "@/lib/cart";
 
 export function AddToCart({
   sku,
@@ -12,6 +13,7 @@ export function AddToCart({
   purchasable: boolean;
 }) {
   const { add } = useCart();
+  const maxQuantity = quantityCap(getProductBySku(sku)?.stockQuantity ?? null);
   const [quantity, setQuantity] = useState(1);
   const [message, setMessage] = useState("");
 
@@ -30,7 +32,7 @@ export function AddToCart({
           id={`menge-${sku}`}
           type="number"
           min={1}
-          max={MAX_CART_QUANTITY}
+          max={maxQuantity}
           value={quantity}
           onChange={(event) => setQuantity(Number(event.target.value))}
         />
@@ -43,8 +45,8 @@ export function AddToCart({
       </p>
       {purchasable ? null : (
         <p className="fine">
-          Eine Bestellung kann erst abgeschlossen werden, wenn Bestand, Versand, Steuer und
-          Zahlung bestätigt sind.
+          Eine Bestellung kann erst abgeschlossen werden, wenn Steuer und Zahlung bestätigt
+          sind. Versand und Bestand sind bereits hinterlegt.
         </p>
       )}
     </form>

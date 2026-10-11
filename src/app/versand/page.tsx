@@ -1,72 +1,69 @@
 import { LegalReviewNotice } from "@/components/LegalReviewNotice";
-import { MissingValue } from "@/components/MissingValue";
 import { storeConfig } from "@/config/store";
+import { formatPrice } from "@/lib/format";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
   title: "Versand und Lieferung",
-  description: "Versandbedingungen von KARTIVO. Kosten und Lieferzeiten stehen noch nicht fest.",
+  description:
+    "Kostenloser Versand von KARTIVO innerhalb Deutschlands. Lieferung in der Regel in 3–8 Werktagen.",
   path: "/versand",
 });
 
-function Value({ value, missing }: { value: string | null; missing: string }) {
-  return value && value.trim() ? <>{value}</> : <MissingValue>{missing}</MissingValue>;
-}
-
 export default function ShippingPage() {
   const shipping = storeConfig.shipping;
+
   return (
     <div className="page-wrap prose">
       <p className="eyebrow">Service</p>
       <h1>Versand und Lieferung</h1>
       <p>
-        Eine Bestellung wird erst möglich, wenn die folgenden Punkte bestätigt und vor dem
-        Abschluss sichtbar sind.
+        Diese Regeln gelten für Bestellungen auf kartivo.de. Sie sind die Angaben, die auch im
+        Produktfeed für Google Merchant Center stehen.
       </p>
-      {!shipping.confirmed ? (
-        <p className="status-note">Die Versandregeln sind noch nicht bestätigt.</p>
-      ) : null}
       <h2>Liefergebiet</h2>
       <p>
-        <Value value={shipping.countries?.join(", ") ?? null} missing="Länder eintragen" />
+        Wir versenden an Adressen in Deutschland. Ein Versand ins Ausland, an Packstationen oder
+        an Orte ohne reguläre Straßenzustellung ist nicht angeboten.
       </p>
       <h2>Versandkosten</h2>
       <p>
-        <Value value={shipping.chargesSummary} missing="Konkrete Versandkosten eintragen" />
+        Jede Bestellung nach Deutschland kostet {formatPrice(0)} Versand. Es gibt keinen
+        Mindestwarenwert und keine Versandpauschale.
       </p>
-      <h2>Lieferzeit</h2>
       <p>
-        <Value value={shipping.deliveryEstimate} missing="Lieferzeit eintragen" />
+        Das gilt für eine Sendung. Ein Surfboard ist Langgut und wird nicht als kleines
+        Standardpaket verschickt.
+      </p>
+      <h2>Bearbeitung</h2>
+      <p>
+        Werktage sind Montag bis Freitag, ohne gesetzliche Feiertage am Versandort in Deutschland.
+        Bestellungen, die an einem Werktag bis {shipping.cutoff} Uhr ({shipping.timezone}) eingehen,
+        werden an diesem Tag in die Bearbeitung genommen. Spätere Bestellungen und Bestellungen am
+        Samstag oder Sonntag beginnen am nächsten Werktag.
+      </p>
+      <p>
+        Die Bearbeitung dauert {shipping.handlingMinDays}–{shipping.handlingMaxDays} Werktage, bis
+        die Sendung dem Versanddienstleister übergeben wird.
+      </p>
+      <h2>Transport</h2>
+      <p>
+        Der Transport innerhalb Deutschlands dauert danach {shipping.transitMinDays}–
+        {shipping.transitMaxDays} Werktage. Die voraussichtliche Gesamtzeit ist die Summe daraus,
+        in der Regel 3–8 Werktage nach dem Beginn der Bearbeitung.
       </p>
       <h2>Versandort</h2>
-      <p>
-        <Value value={shipping.origin} missing="Versandort eintragen" />
-      </p>
-      <h2>Bearbeitungszeit</h2>
-      <p>
-        <Value value={shipping.processingTime} missing="Bearbeitungszeit eintragen" />
-      </p>
+      <p>Versand aus {shipping.origin}. Eine Straße des Lagers ist noch nicht veröffentlicht.</p>
       <h2>Sendungsverfolgung</h2>
       <p>
-        {shipping.trackingAvailable === null ? (
-          <MissingValue>Angabe zur Sendungsverfolgung fehlt</MissingValue>
-        ) : shipping.trackingAvailable ? (
-          "Eine Sendungsverfolgung ist vorgesehen."
-        ) : (
-          "Eine Sendungsverfolgung ist nicht vorgesehen."
-        )}
-      </p>
-      <h2>Kostenloser Versand</h2>
-      <p>
-        {shipping.freeShippingFromEur != null && shipping.confirmed
-          ? `Kostenloser Versand ab ${shipping.freeShippingFromEur.toFixed(2)} EUR, sofern das in den bestätigten Regeln steht.`
-          : "Es gilt derzeit kein kostenloser Versand. Der Beispielsatz „Kostenloser Versand ab 100 €“ ist nicht freigeschaltet."}
+        Wenn der Versanddienstleister eine Sendungsnummer vergibt, teilen wir sie mit. Es gibt
+        keinen eigenen Kurier.
       </p>
       <LegalReviewNotice
         topics={[
-          "Preisangabenverordnung: Versandkosten vor der Bestellung ausweisen",
-          "Fernabsatz: Lieferbeschränkungen und Fristen verständlich nennen",
-          "Keine Lieferzusage veröffentlichen, die der Betrieb nicht hält",
+          "Preisangabenverordnung: die Versandkosten stehen vor einer Bestellung auf der Produktseite, im Warenkorb und an der Kasse",
+          "Fernabsatz: Liefergebiet und Fristen müssen zum tatsächlichen Versandablauf passen",
+          "Google Merchant Center: dieselben Zeiten und Kosten im Versanddienst hinterlegen",
         ]}
       />
     </div>

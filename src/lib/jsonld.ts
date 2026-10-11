@@ -1,6 +1,6 @@
 import { siteUrl, storeConfig } from "@/config/store";
 import { products, type Product } from "@/data/catalog";
-import { schemaAvailability } from "@/lib/commerce";
+import { schemaAvailability, orderShippingEur } from "@/lib/commerce";
 import { schemaPrice } from "@/lib/format";
 
 export function jsonLdScript(data: unknown): string {
@@ -23,6 +23,59 @@ export function websiteJsonLd() {
 }
 
 export function productJsonLd(product: Product) {
+  const shipping = storeConfig.shipping;
+  const returns = storeConfig.returns;
+  const shippingEur = orderShippingEur(product.price);
+  const offer: Record<string, unknown> = {
+    "@type": "Offer",
+    url: `${siteUrl}/products/${product.slug}`,
+    priceCurrency: product.currency,
+    price: schemaPrice(product.price),
+    availability: schemaAvailability(product),
+    itemCondition: "https://schema.org/NewCondition",
+  };
+
+  if (shipping.confirmed && shippingEur != null && shipping.countryCode) {
+    offer.shippingDetails = {
+      "@type": "OfferShippingDetails",
+      shippingRate: {
+        "@type": "MonetaryAmount",
+        value: schemaPrice(shippingEur),
+        currency: "EUR",
+      },
+      shippingDestination: {
+        "@type": "DefinedRegion",
+        addressCountry: shipping.countryCode,
+      },
+      deliveryTime: {
+        "@type": "ShippingDeliveryTime",
+        handlingTime: {
+          "@type": "QuantitativeValue",
+          minValue: shipping.handlingMinDays,
+          maxValue: shipping.handlingMaxDays,
+          unitCode: "DAY",
+        },
+        transitTime: {
+          "@type": "QuantitativeValue",
+          minValue: shipping.transitMinDays,
+          maxValue: shipping.transitMaxDays,
+          unitCode: "DAY",
+        },
+      },
+    };
+  }
+
+  if (returns.confirmed) {
+    offer.hasMerchantReturnPolicy = {
+      "@type": "MerchantReturnPolicy",
+      applicableCountry: "DE",
+      returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+      merchantReturnDays: 14,
+      returnMethod: "https://schema.org/ReturnByMail",
+      returnFees: "https://schema.org/ReturnFeesCustomerResponsibility",
+    };
+  }
+
   const data: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -36,14 +89,7 @@ export function productJsonLd(product: Product) {
     },
     color: product.color,
     url: `${siteUrl}/products/${product.slug}`,
-    offers: {
-      "@type": "Offer",
-      url: `${siteUrl}/products/${product.slug}`,
-      priceCurrency: product.currency,
-      price: schemaPrice(product.price),
-      availability: schemaAvailability(product),
-      itemCondition: "https://schema.org/NewCondition",
-    },
+    offers: offer,
   };
 
   if (product.gtin) data.gtin = product.gtin;

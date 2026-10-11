@@ -2,7 +2,7 @@
  * Single product catalog. Pages, cart prices, JSON-LD, and the Google feed
  * all read this file. Prices are sample catalog prices from the merchant brief.
  *
- * Leave stockQuantity null until a real count is known.
+ * stockQuantity is the merchant's confirmed count for each board.
  * Leave gtin null unless a genuine GTIN has been issued.
  * Leave mpn null until the manufacturer part number is confirmed.
  * Set detailsConfirmed only after the row values match the physical board.
@@ -93,7 +93,7 @@ export const products: readonly Product[] = [
       { label: "Farbe", value: "Türkis" },
       { label: "Niveau", value: "Anfänger" },
     ],
-    stockQuantity: null,
+    stockQuantity: 5,
     detailsConfirmed: sharedUnconfirmed,
     gtin: null,
     mpn: null,
@@ -136,7 +136,7 @@ export const products: readonly Product[] = [
       { label: "Farbe", value: "Creme mit dunkelblauen Details" },
       { label: "Niveau", value: "Einsteiger bis leicht fortgeschritten" },
     ],
-    stockQuantity: null,
+    stockQuantity: 5,
     detailsConfirmed: sharedUnconfirmed,
     gtin: null,
     mpn: null,
@@ -179,7 +179,7 @@ export const products: readonly Product[] = [
       { label: "Farbe", value: "Perlweiß mit dunkelblauen Details" },
       { label: "Niveau", value: "Fortgeschritten bis erfahren" },
     ],
-    stockQuantity: null,
+    stockQuantity: 5,
     detailsConfirmed: sharedUnconfirmed,
     gtin: null,
     mpn: null,

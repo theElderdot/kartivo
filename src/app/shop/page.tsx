@@ -15,8 +15,8 @@ export default function ShopPage() {
         <p className="eyebrow">Shop</p>
         <h1>Boards entdecken</h1>
         <p>
-          Drei Surfboards, drei Katalogpreise. Der Steuerausweis und der Bestand sind noch nicht
-          bestätigt.
+          Drei Surfboards, drei Katalogpreise. Von jedem Board sind 5 Stück vorrätig. Der
+          Steuerausweis ist noch nicht bestätigt.
         </p>
       </header>
       <div className="product-grid">

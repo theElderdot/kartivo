@@ -13,7 +13,10 @@ export default function CheckoutPage() {
       <header className="page-intro">
         <p className="eyebrow">Kasse</p>
         <h1>Bestellung prüfen</h1>
-        <p>Preis, Steuer und Versand müssen feststehen, bevor hier eine Bestellung möglich ist.</p>
+        <p>
+          Der Versand nach Deutschland steht auf der Bestellung. Steuer und Zahlung sind noch
+          nicht bestätigt, deshalb wird hier keine Bestellung ausgeführt.
+        </p>
       </header>
       <CheckoutView />
     </div>

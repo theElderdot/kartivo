@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { storeConfig } from "@/config/store";
+import { orderShippingEur } from "@/lib/commerce";
+import { formatPrice } from "@/lib/format";
 
 export function TaxNote() {
   const tax = storeConfig.tax;
@@ -22,7 +24,7 @@ export function TaxNote() {
   );
 }
 
-export function ShippingNote() {
+export function ShippingNote({ goodsSubtotal }: { goodsSubtotal?: number }) {
   const shipping = storeConfig.shipping;
   if (!shipping.confirmed) {
     return (
@@ -33,11 +35,11 @@ export function ShippingNote() {
       </p>
     );
   }
+  const cost = goodsSubtotal == null ? null : orderShippingEur(goodsSubtotal);
   return (
     <p className="fine">
-      {shipping.chargesSummary} Liefergebiet: {shipping.countries?.join(", ")}. Lieferzeit:{" "}
-      {shipping.deliveryEstimate}. Versandort: {shipping.origin}. Bearbeitungszeit:{" "}
-      {shipping.processingTime}.{" "}
+      {cost != null ? <>Versand nach Deutschland: {formatPrice(cost)}. </> : null}
+      {shipping.chargesSummary} Lieferzeit: {shipping.deliveryEstimate}{" "}
       <Link href="/versand">Versand und Lieferung</Link>
     </p>
   );

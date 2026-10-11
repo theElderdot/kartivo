@@ -39,9 +39,9 @@ export default function TermsPage() {
       </p>
       <h2>Lieferung und Rückgabe</h2>
       <p>
-        Es gelten die Seiten Versand und Lieferung sowie Rückgabe und Erstattung, jeweils in der
-        bestätigten Fassung. Solange dort Platzhalter stehen, gibt es kein Liefer- oder
-        Rückgabeversprechen.
+        Es gelten die Seiten Versand und Lieferung sowie Rückgabe und Erstattung. Ein Kaufvertrag
+        kommt über diese Website derzeit trotzdem nicht zustande, weil die Zahlung nicht
+        angebunden ist.
       </p>
       <h2>Gewährleistung</h2>
       <p>

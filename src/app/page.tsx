@@ -17,7 +17,7 @@ export const metadata = pageMetadata({
 const faqs = [
   {
     q: "Kann ich hier schon ein Board kaufen?",
-    a: "Nein. Bestand und Zahlungsabwicklung sind noch nicht bestätigt. Der Warenkorb merkt sich eine Auswahl im Browser, erzeugt aber keine Bestellung.",
+    a: "Nein. Von jedem Board sind 5 Stück vorrätig, aber die Zahlung ist noch nicht angebunden. Der Warenkorb merkt sich eine Auswahl im Browser und erzeugt keine Bestellung.",
   },
   {
     q: "Sind die Preise verbindlich inklusive Mehrwertsteuer?",
@@ -25,11 +25,11 @@ const faqs = [
   },
   {
     q: "Was kostet der Versand, und wie lange dauert er?",
-    a: "Liefergebiet, Versandkosten und Lieferzeit sind noch nicht hinterlegt. Der Beispielsatz zum kostenlosen Versand ab 100 € ist nicht freigeschaltet.",
+    a: "Jede Bestellung nach Deutschland wird kostenlos versendet. Die Bearbeitung dauert 1–3 Werktage, der Transport danach 2–5 Werktage.",
   },
   {
     q: "Wie läuft eine Rückgabe?",
-    a: "Frist, Ablauf, Erstattung und Rücksendekosten stehen noch nicht fest. Gesetzliche Verbraucherrechte werden dadurch nicht ausgeschlossen. Details folgen auf der Seite Rückgabe und Erstattung.",
+    a: "Du hast 14 Tage Widerruf ab dem Erhalt der Ware. Die Kosten der Rücksendung trägst du, außer die Ware ist mangelhaft oder falsch geliefert. Die Erstattung läuft über den ursprünglichen Zahlungsweg.",
   },
   {
     q: "Sind die Produktfotos die Boards, die geliefert werden?",
@@ -122,12 +122,12 @@ export default function HomePage() {
           </article>
           <article className="trust-card">
             <h3>Lieferung</h3>
-            <p>Versandkosten, Liefergebiet und Lieferzeit werden vor einer Bestellung genannt. Sie sind noch offen.</p>
+            <p>Kostenlos für jede Bestellung nach Deutschland. Bearbeitung 1–3 Werktage, Transport danach 2–5 Werktage.</p>
             <Link href="/versand">Versand und Lieferung</Link>
           </article>
           <article className="trust-card">
             <h3>Rückgabe</h3>
-            <p>Frist, Ablauf und Kosten der Rücksendung sind noch nicht festgelegt. Eine kostenlose Rücksendung wird nicht versprochen.</p>
+            <p>14 Tage Widerruf ab Erhalt. Die Rücksendung zahlst du, außer die Ware ist mangelhaft oder falsch.</p>
             <Link href="/rueckgabe">Rückgabe und Erstattung</Link>
           </article>
           <article className="trust-card">

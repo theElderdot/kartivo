@@ -5,7 +5,8 @@ import Link from "next/link";
 import { PaymentNote, ShippingNote, TaxNote } from "@/components/CommerceNotes";
 import { useCart } from "@/components/CartProvider";
 import { getProductBySku } from "@/data/catalog";
-import { MAX_CART_QUANTITY } from "@/lib/cart";
+import { orderShippingEur } from "@/lib/commerce";
+import { quantityCap } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 
 export function CartView() {
@@ -19,6 +20,7 @@ export function CartView() {
     .filter((row): row is NonNullable<typeof row> => row !== null);
 
   const subtotal = rows.reduce((sum, row) => sum + row.amount, 0);
+  const shipping = orderShippingEur(subtotal);
 
   if (!ready) {
     return <p>Warenkorb wird geladen.</p>;
@@ -59,7 +61,7 @@ export function CartView() {
                 className="line-qty"
                 type="number"
                 min={1}
-                max={MAX_CART_QUANTITY}
+                max={quantityCap(product.stockQuantity)}
                 value={line.quantity}
                 onChange={(event) => setQuantity(line.sku, Number(event.target.value))}
               />
@@ -74,10 +76,16 @@ export function CartView() {
         <p>
           <strong>Zwischensumme der Katalogpreise: {formatPrice(subtotal)}</strong>
         </p>
+        <p>
+          <strong>
+            Versand nach Deutschland: {shipping == null ? "offen" : formatPrice(shipping)}
+          </strong>
+        </p>
         <TaxNote />
-        <ShippingNote />
+        <ShippingNote goodsSubtotal={subtotal} />
         <p className="fine">
-          Das ist keine Endsumme. Versand und Steuer fehlen, solange sie nicht bestätigt sind.
+          Versand ist für diese Bestellung ausgewiesen. Die Mehrwertsteuer ist noch nicht
+          gesondert bestätigt, und es wird keine Zahlung ausgeführt.
         </p>
         <PaymentNote />
         <Link className="button button-dark" href="/kasse">

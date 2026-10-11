@@ -32,10 +32,10 @@ export function stockLabel(product: Product): string {
     return "Bestand noch nicht bestätigt. Derzeit nicht als verfügbar gekennzeichnet.";
   }
   if (product.stockQuantity > 0 && storeConfig.payment.configured) {
-    return "Auf Lager";
+    return `${product.stockQuantity} auf Lager`;
   }
   if (product.stockQuantity > 0) {
-    return "Menge hinterlegt, Zahlung aber noch nicht angebunden. Derzeit nicht käuflich.";
+    return `${product.stockQuantity} auf Lager. Eine Bestellung ist noch nicht möglich, weil die Zahlung nicht angebunden ist.`;
   }
   return "Derzeit nicht auf Lager";
 }
@@ -58,8 +58,21 @@ export function canPublishAnnouncement(): boolean {
   return (
     storeConfig.announcement.enabled &&
     storeConfig.shipping.confirmed &&
-    storeConfig.shipping.freeShippingFromEur != null
+    storeConfig.shipping.flatRateEur === 0
   );
+}
+
+/** Shipping charge for one order. Null while the shipping policy is unconfirmed. */
+export function orderShippingEur(goodsSubtotal: number): number | null {
+  const shipping = storeConfig.shipping;
+  if (!shipping.confirmed || shipping.flatRateEur == null) return null;
+  if (
+    shipping.freeShippingFromEur != null &&
+    goodsSubtotal >= shipping.freeShippingFromEur
+  ) {
+    return 0;
+  }
+  return shipping.flatRateEur;
 }
 
 export function robotsPolicy(readyForLaunch: boolean): {
@@ -113,8 +126,8 @@ export function launchBlockers(): string[] {
     shipping.confirmed && shipping.trackingAvailable === null
       ? "Angabe, ob eine Sendungsverfolgung angeboten wird"
       : null,
-    shipping.confirmed && !shipping.feed
-      ? "Versandangabe für den Google-Feed (Land, Service, Preis)"
+    shipping.confirmed && !shipping.countryCode
+      ? "Ländercode für den Google-Feed"
       : null,
     returns.confirmed ? null : "Bestätigte Rückgabe- und Erstattungsregeln",
     returns.confirmed ? missing("Rückgabefrist", returns.period) : null,

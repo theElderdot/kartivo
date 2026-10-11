@@ -14,7 +14,7 @@ The site is a preview. Checkout does not take payment, stock is unconfirmed, and
 6. Set `legalReviewCompleted` and `readyForLaunch` only after `npm run validate` no longer lists those gaps as open in the imprint.
 7. Submit `https://kartivo.de/feeds/google-shopping.xml` in Merchant Center.
 
-Do not enable the announcement bar until the shipping policy really includes free shipping from 100 €.
+The announcement bar is on because every order to Germany ships free.
 
 ## Scripts
 

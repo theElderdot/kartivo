@@ -29,13 +29,23 @@ export default function WithdrawalPage() {
       />
       <h2>Widerrufsrecht</h2>
       <p>
-        <MissingValue>
-          Belehrungstext nach gesetzlichem Muster und Prüfung einsetzen. Keine erfundene Frist.
-        </MissingValue>
+        Du hast das Recht, binnen 14 Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.
+        Die Frist beginnt an dem Tag, an dem du die Ware in Besitz genommen hast. Um das
+        Widerrufsrecht auszuüben, musst du uns mittels einer eindeutigen Erklärung informieren.
+        Name und Anschrift des Unternehmers stehen unten und sind noch Platzhalter, bis sie im
+        Impressum eingetragen sind.
       </p>
       <h2>Folgen des Widerrufs</h2>
       <p>
-        <MissingValue>Erstattung, Rücksendung und Wertersatz nach Prüfung eintragen</MissingValue>
+        Wir erstatten alle Zahlungen, die wir von dir erhalten haben, einschließlich der Kosten
+        der günstigsten Standardlieferung, innerhalb von 14 Tagen ab dem Tag, an dem die
+        Mitteilung über den Widerruf bei uns eingegangen ist. Die Erstattung erfolgt auf dem
+        ursprünglichen Zahlungsweg. Wir können die Erstattung verweigern, bis wir die Ware zurück
+        haben oder du einen Nachweis der Rücksendung erbracht hast.
+      </p>
+      <p>
+        Du trägst die unmittelbaren Kosten der Rücksendung. Bei mangelhafter oder falsch
+        gelieferter Ware tragen wir diese Kosten.
       </p>
       <h2>Muster-Widerrufsformular</h2>
       <p>

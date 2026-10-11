@@ -91,7 +91,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             ))}
           </ul>
           <AddToCart sku={product.sku} purchasable={isPurchasable(product)} />
-          <ShippingNote />
+          <ShippingNote goodsSubtotal={product.price} />
           <p className="fine">
             <Link href="/rueckgabe">Rückgabe und Erstattung</Link>
           </p>

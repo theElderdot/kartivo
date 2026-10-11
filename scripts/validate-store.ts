@@ -38,8 +38,8 @@ for (const [id, slug, price] of expected) {
   check(product.price === price, `${id} price`);
   check(product.currency === "EUR", `${id} currency`);
   check(product.gtin === null, `${id} must not invent a GTIN`);
-  check(product.stockQuantity === null, `${id} stock must stay unconfirmed`);
-  check(googleAvailability(product) === "out_of_stock", `${id} must not be in_stock`);
+  check(product.stockQuantity === 5, `${id} stock must be the confirmed count`);
+  check(googleAvailability(product) === "out_of_stock", `${id} stays out_of_stock until payment works`);
   check(formatPrice(product.price).includes(price.toFixed(2).replace(".", ",")), `${id} German price`);
   check(product.image.endsWith(".webp"), `${id} image path`);
 }
@@ -83,7 +83,11 @@ for (const product of products) {
     xml.includes(`<g:image_link>${siteUrl}${product.image}</g:image_link>`),
     `Feed image ${product.id}`,
   );
-  check(xml.includes("<g:availability>out_of_stock</g:availability>"), "Feed availability");
+  check(xml.includes("<g:shipping>"), "Feed must include shipping");
+  check(xml.includes("<g:country>DE</g:country>"), "Feed shipping country");
+  check(xml.includes("<g:min_handling_time>1</g:min_handling_time>"), "Feed handling time");
+  check(xml.includes("<g:max_transit_time>5</g:max_transit_time>"), "Feed transit time");
+  check((xml.match(/<g:price>0\.00 EUR<\/g:price>/g) ?? []).length === 3, "These boards ship free");
   check(xml.includes(product.description.split(" ").slice(0, 4).join(" ")), `Feed description ${product.id}`);
 }
 
@@ -103,8 +107,8 @@ async function validateImages() {
   }
 }
 
-const cart = addLine([], "KART-WAVE-STARTER-001", 2);
-check(cartCount(cart) === 2, "Cart quantity");
+const cart = addLine([], "KART-WAVE-STARTER-001", 6, 5);
+check(cartCount(cart) === 5, "Cart quantity cannot exceed confirmed stock");
 check(cart[0]?.sku === "KART-WAVE-STARTER-001", "Cart stores the sku, not a copied price");
 
 validateImages().then(() => {

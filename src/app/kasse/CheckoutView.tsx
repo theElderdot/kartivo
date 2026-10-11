@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
 import { storeConfig } from "@/config/store";
 import { getProductBySku } from "@/data/catalog";
-import { isPurchasable } from "@/lib/commerce";
+import { isPurchasable, orderShippingEur } from "@/lib/commerce";
 import { formatPrice } from "@/lib/format";
 
 export function CheckoutView() {
@@ -20,6 +20,7 @@ export function CheckoutView() {
     })
     .filter((row): row is NonNullable<typeof row> => row !== null);
   const subtotal = rows.reduce((sum, row) => sum + row.amount, 0);
+  const shipping = orderShippingEur(subtotal);
   const canOrder = rows.length > 0 && rows.every(({ product }) => isPurchasable(product));
 
   if (!ready) return <p>Kasse wird geladen.</p>;
@@ -52,8 +53,13 @@ export function CheckoutView() {
         <p>
           <strong>Zwischensumme der Katalogpreise: {formatPrice(subtotal)}</strong>
         </p>
+        <p>
+          <strong>
+            Versand nach Deutschland: {shipping == null ? "offen" : formatPrice(shipping)}
+          </strong>
+        </p>
         <TaxNote />
-        <ShippingNote />
+        <ShippingNote goodsSubtotal={subtotal} />
         <PaymentNote />
         <p className="status-note">
           {storeConfig.payment.configured

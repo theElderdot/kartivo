@@ -1,6 +1,6 @@
 import { siteUrl, storeConfig } from "@/config/store";
 import { products, type Product } from "@/data/catalog";
-import { googleAvailability } from "@/lib/commerce";
+import { googleAvailability, orderShippingEur } from "@/lib/commerce";
 import { feedPrice } from "@/lib/format";
 import { escapeXml } from "@/lib/xml";
 
@@ -47,12 +47,19 @@ function productItem(product: Product): string {
   }
 
   const shipping = storeConfig.shipping;
-  if (shipping.confirmed && shipping.feed) {
-    lines.push("      <g:shipping>");
-    lines.push(`        <g:country>${escapeXml(shipping.feed.country)}</g:country>`);
-    lines.push(`        <g:service>${escapeXml(shipping.feed.service)}</g:service>`);
-    lines.push(`        <g:price>${feedPrice(shipping.feed.priceEur)}</g:price>`);
-    lines.push("      </g:shipping>");
+  if (shipping.confirmed && shipping.countryCode) {
+    const shippingEur = orderShippingEur(product.price);
+    if (shippingEur != null) {
+      lines.push("      <g:shipping>");
+      lines.push(`        <g:country>${escapeXml(shipping.countryCode)}</g:country>`);
+      lines.push(`        <g:service>${escapeXml(shipping.feedService)}</g:service>`);
+      lines.push(`        <g:price>${feedPrice(shippingEur)}</g:price>`);
+      lines.push(`        <g:min_handling_time>${shipping.handlingMinDays}</g:min_handling_time>`);
+      lines.push(`        <g:max_handling_time>${shipping.handlingMaxDays}</g:max_handling_time>`);
+      lines.push(`        <g:min_transit_time>${shipping.transitMinDays}</g:min_transit_time>`);
+      lines.push(`        <g:max_transit_time>${shipping.transitMaxDays}</g:max_transit_time>`);
+      lines.push("      </g:shipping>");
+    }
   }
 
   lines.push("    </item>");
