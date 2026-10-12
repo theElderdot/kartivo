@@ -4,11 +4,10 @@ import { products, type Product } from "@/data/catalog";
 export type GoogleAvailability = "in_stock" | "out_of_stock" | "preorder" | "backorder";
 
 /**
- * in_stock only when a real quantity exists and a customer can actually pay.
- * Unconfirmed stock stays out_of_stock. Never invent a count.
+ * Feed and structured-data availability from confirmed inventory only.
+ * Checkout stays gated in isPurchasable(); do not tie Merchant Center stock to payment setup.
  */
 export function googleAvailability(product: Product): GoogleAvailability {
-  if (!storeConfig.payment.configured) return "out_of_stock";
   if (product.stockQuantity === null) return "out_of_stock";
   if (product.stockQuantity > 0) return "in_stock";
   return "out_of_stock";

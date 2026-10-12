@@ -39,7 +39,7 @@ for (const [id, slug, price] of expected) {
   check(product.currency === "EUR", `${id} currency`);
   check(product.gtin === null, `${id} must not invent a GTIN`);
   check(product.stockQuantity === 5, `${id} stock must be the confirmed count`);
-  check(googleAvailability(product) === "out_of_stock", `${id} stays out_of_stock until payment works`);
+  check(googleAvailability(product) === "in_stock", `${id} feed availability follows confirmed stock`);
   check(formatPrice(product.price).includes(price.toFixed(2).replace(".", ",")), `${id} German price`);
   check(product.image.endsWith(".webp"), `${id} image path`);
 }
@@ -67,7 +67,7 @@ const parsed = XMLValidator.validate(xml);
 check(parsed === true, `Feed XML is not valid: ${JSON.stringify(parsed)}`);
 check(xml.includes('xmlns:g="http://base.google.com/ns/1.0"'), "Feed namespace");
 check(!xml.includes("<g:gtin"), "Feed must not contain a GTIN");
-check(!xml.includes(">in_stock<"), "Feed must not claim in_stock");
+check(xml.includes(">in_stock<"), "Feed must reflect confirmed stock as in_stock");
 check(xml.includes("<g:google_product_category>3320</g:google_product_category>"), "Surfboard category");
 check(!xml.includes("aggregateRating"), "Feed must not contain ratings");
 check(!xml.includes("Kundenbewertung"), "Feed must not contain review language");
