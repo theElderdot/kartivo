@@ -20,17 +20,18 @@ function check(condition: boolean, message: string) {
   if (!condition) failures.push(message);
 }
 
-check(products.length === 3, "Catalog must contain exactly three products");
-check(new Set(products.map((product) => product.id)).size === 3, "Product ids must be unique");
-check(new Set(products.map((product) => product.slug)).size === 3, "Slugs must be unique");
+check(products.length === 4, "Catalog must contain exactly four products");
+check(new Set(products.map((product) => product.id)).size === products.length, "Product ids must be unique");
+check(new Set(products.map((product) => product.slug)).size === products.length, "Slugs must be unique");
 
 const expected = [
-  ["KART-WAVE-STARTER-001", "kartivo-wave-starter", 299],
-  ["KART-OCEAN-CRUISER-001", "kartivo-ocean-cruiser", 449],
-  ["KART-WAVE-PRO-001", "kartivo-wave-pro", 599],
+  ["KART-WAVE-STARTER-001", "kartivo-wave-starter", 299, 5, "in_stock"],
+  ["KART-OCEAN-CRUISER-001", "kartivo-ocean-cruiser", 449, 5, "in_stock"],
+  ["KART-WAVE-PRO-001", "kartivo-wave-pro", 599, 5, "in_stock"],
+  ["KART-VOLT-ELECTRIC-001", "kartivo-volt-electric", 600, null, "out_of_stock"],
 ] as const;
 
-for (const [id, slug, price] of expected) {
+for (const [id, slug, price, stock, availability] of expected) {
   const product = products.find((item) => item.id === id);
   check(Boolean(product), `Missing ${id}`);
   if (!product) continue;
@@ -38,9 +39,13 @@ for (const [id, slug, price] of expected) {
   check(product.price === price, `${id} price`);
   check(product.currency === "EUR", `${id} currency`);
   check(product.gtin === null, `${id} must not invent a GTIN`);
-  check(product.stockQuantity === 5, `${id} stock must be the confirmed count`);
-  check(googleAvailability(product) === "in_stock", `${id} feed availability follows confirmed stock`);
-  check(formatPrice(product.price).includes(price.toFixed(2).replace(".", ",")), `${id} German price`);
+  check(product.stockQuantity === stock, `${id} stock must match the confirmed count`);
+  check(googleAvailability(product) === availability, `${id} feed availability follows confirmed stock`);
+  const germanPrice = new Intl.NumberFormat("de-DE", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(price);
+  check(formatPrice(product.price).includes(germanPrice), `${id} German price`);
   check(product.image.endsWith(".webp"), `${id} image path`);
 }
 
@@ -87,7 +92,10 @@ for (const product of products) {
   check(xml.includes("<g:country>DE</g:country>"), "Feed shipping country");
   check(xml.includes("<g:min_handling_time>1</g:min_handling_time>"), "Feed handling time");
   check(xml.includes("<g:max_transit_time>5</g:max_transit_time>"), "Feed transit time");
-  check((xml.match(/<g:price>0\.00 EUR<\/g:price>/g) ?? []).length === 3, "These boards ship free");
+  check(
+    (xml.match(/<g:price>0\.00 EUR<\/g:price>/g) ?? []).length === products.length,
+    "These boards ship free",
+  );
   check(xml.includes(product.description.split(" ").slice(0, 4).join(" ")), `Feed description ${product.id}`);
 }
 

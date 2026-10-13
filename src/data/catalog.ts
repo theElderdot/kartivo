@@ -184,6 +184,49 @@ export const products: readonly Product[] = [
     gtin: null,
     mpn: null,
   },
+  {
+    id: "KART-VOLT-ELECTRIC-001",
+    sku: "KART-VOLT-ELECTRIC-001",
+    slug: "kartivo-volt-electric",
+    name: "KARTIVO Volt",
+    title: "KARTIVO Volt Elektrosurfboard 5'8 Zoll Graphit motorisiert",
+    description:
+      "Das KARTIVO Volt ist ein motorisiertes Surfboard zum Stehen auf flachem Wasser. Das 5'8-Zoll-Board hat ein graphitfarbenes Deck und eine geschlossene Motorverkleidung am Heck. Es ist kein Wellen-Shortboard. Länge, Farbe und Produkttyp sind die Katalogangaben zu diesem Entwurf.",
+    cardDescription:
+      "Motorisiertes Surfboard zum Stehen, mit graphitfarbenem Deck und Motorverkleidung am Heck.",
+    highlights: [
+      "Motorisiertes Surfboard",
+      "Zum Stehen auf flachem Wasser",
+      "Graphitfarbenes Deck",
+      "Motorverkleidung am Heck",
+    ],
+    price: 600,
+    currency: "EUR",
+    condition: "new",
+    brand: "KARTIVO",
+    productType: "Elektrosurfboard",
+    feedProductType: "Surfboards > Elektrosurfboard",
+    lengthLabel: "5'8\" / 173 cm",
+    color: "Graphit",
+    feedColor: "Graphit",
+    skillLevel: "Fahrer mit Stand-Erfahrung",
+    image: "/images/products/kartivo-volt-electric.webp",
+    imageAlt:
+      "Graphitfarbenes KARTIVO Volt Elektrosurfboard mit Motorverkleidung am Heck, vollständig auf dem Sand liegend",
+    specs: [
+      { label: "Marke", value: "KARTIVO" },
+      { label: "SKU", value: "KART-VOLT-ELECTRIC-001" },
+      { label: "Zustand", value: "Neu" },
+      { label: "Produkttyp", value: "Elektrosurfboard" },
+      { label: "Länge", value: "5'8\" / 173 cm" },
+      { label: "Farbe", value: "Graphit" },
+      { label: "Niveau", value: "Fahrer mit Stand-Erfahrung" },
+    ],
+    stockQuantity: null,
+    detailsConfirmed: sharedUnconfirmed,
+    gtin: null,
+    mpn: null,
+  },
 ];
 
 /** Intentionally absent. Do not fill these in without checking the real board. */
@@ -195,6 +238,7 @@ export const unverifiedSpecTopics = [
   "Hersteller, Produktionsort und Garantie",
   "Messergebnisse, Tests und Zertifizierungen",
   "GTIN",
+  "Motorleistung, Akku und Reichweite",
 ] as const;
 
 export function getProductBySlug(slug: string): Product | undefined {

@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata({
   title: "Surfboard Guide",
   description:
-    "Welches KARTIVO Board passt zu deinem Level: Wave Starter, Ocean Cruiser oder Wave Pro.",
+    "Welches KARTIVO Board passt: Wave Starter, Ocean Cruiser, Wave Pro oder Volt.",
   path: "/guide",
 });
 
@@ -26,6 +26,12 @@ const paths = [
     name: "Wave Pro",
     href: "/products/kartivo-wave-pro",
     text: "Ein 6'2-Zoll-Shortboard mit schmalerer Silhouette für Surfer, die ein kurzes, sportliches Board fahren.",
+  },
+  {
+    level: "Flachwasser",
+    name: "Volt",
+    href: "/products/kartivo-volt-electric",
+    text: "Ein 5'8-Zoll-Elektrosurfboard zum Stehen auf flachem Wasser, mit graphitfarbenem Deck und Motorverkleidung am Heck.",
   },
 ];
 

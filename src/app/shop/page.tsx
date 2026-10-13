@@ -4,7 +4,8 @@ import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
   title: "Shop",
-  description: "Drei KARTIVO Surfboards: Wave Starter, Ocean Cruiser und Wave Pro.",
+  description:
+    "Vier KARTIVO Boards: Wave Starter, Ocean Cruiser, Wave Pro und Volt.",
   path: "/shop",
 });
 
@@ -15,7 +16,7 @@ export default function ShopPage() {
         <p className="eyebrow">Shop</p>
         <h1>Boards entdecken</h1>
         <p>
-          Drei Surfboards, drei Katalogpreise. Von jedem Board sind 5 Stück vorrätig. Der
+          Vier Boards, vier Katalogpreise. Der Bestand steht auf der Produktseite. Der
           Steuerausweis ist noch nicht bestätigt.
         </p>
       </header>

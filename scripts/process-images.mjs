@@ -28,6 +28,12 @@ const jobs = [
       "AI-generated concept photograph of the KARTIVO Wave Pro shortboard. Not a photograph of a manufactured board.",
   },
   {
+    source: "kartivo-volt-electric.jpg",
+    dest: "public/images/products/kartivo-volt-electric.webp",
+    description:
+      "AI-generated concept photograph of the KARTIVO Volt electric surfboard. Not a photograph of a manufactured board.",
+  },
+  {
     source: "kartivo-hero.jpg",
     dest: "public/images/hero.webp",
     description:

@@ -14,13 +14,14 @@ export default function AboutPage() {
       <h1>Mehr als ein Board. Ein Lebensgefühl.</h1>
       <p>
         KARTIVO ist eine Surfboard-Marke für Menschen, die das Meer nicht nur anschauen wollen.
-        Der Entwurf ist ruhig, klar und auf das Wasser ausgerichtet: drei Boards, drei
+        Der Entwurf ist ruhig, klar und auf das Wasser ausgerichtet: vier Boards, vier
         unterschiedliche Einstiege.
       </p>
       <p>
         Der Wave Starter ist als Soft-Top für die ersten Wellen gedacht. Der Ocean Cruiser ist ein
         Funboard für den Schritt danach. Das Wave Pro ist ein kurzes Board für Surfer, die schon
-        eigene Linien fahren. Mehr als diese Katalogangaben behaupten wir hier nicht.
+        eigene Linien fahren. Das Volt ist ein motorisiertes Board für flaches Wasser. Mehr als
+        diese Katalogangaben behaupten wir hier nicht.
       </p>
       <p>
         Firmensitz, Herstellung und Unternehmensgeschichte werden an dieser Stelle ergänzt, sobald

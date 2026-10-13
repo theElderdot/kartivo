@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     template: "%s | KARTIVO",
   },
   description:
-    "Drei Boards. Dein nächstes Abenteuer. Entdecke Surfboards für unterschiedliche Levels und finde deinen Style auf dem Wasser.",
+    "Vier Boards. Dein nächstes Abenteuer. Entdecke Surfboards für unterschiedliche Levels und finde deinen Style auf dem Wasser.",
   openGraph: {
     type: "website",
     locale: "de_DE",

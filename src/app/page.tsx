@@ -9,7 +9,7 @@ import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata({
   title: "KARTIVO | Finde dein perfektes Surfboard",
   description:
-    "Drei Boards. Dein nächstes Abenteuer. Entdecke Surfboards für unterschiedliche Levels und finde deinen Style auf dem Wasser.",
+    "Vier Boards. Dein nächstes Abenteuer. Entdecke Surfboards für unterschiedliche Levels und finde deinen Style auf dem Wasser.",
   path: "/",
   absoluteTitle: true,
 });
@@ -17,7 +17,7 @@ export const metadata = pageMetadata({
 const faqs = [
   {
     q: "Kann ich hier schon ein Board kaufen?",
-    a: "Nein. Von jedem Board sind 5 Stück vorrätig, aber die Zahlung ist noch nicht angebunden. Der Warenkorb merkt sich eine Auswahl im Browser und erzeugt keine Bestellung.",
+    a: "Nein. Der Bestand steht auf der Produktseite. Die Zahlung ist noch nicht angebunden. Der Warenkorb merkt sich eine Auswahl im Browser und erzeugt keine Bestellung.",
   },
   {
     q: "Sind die Preise verbindlich inklusive Mehrwertsteuer?",
@@ -55,7 +55,7 @@ export default function HomePage() {
           <p className="eyebrow">KARTIVO</p>
           <h1>Finde dein perfektes Surfboard.</h1>
           <p>
-            Drei Boards. Dein nächstes Abenteuer. Entdecke Surfboards für unterschiedliche Levels
+            Vier Boards. Dein nächstes Abenteuer. Entdecke Surfboards für unterschiedliche Levels
             und finde deinen Style auf dem Wasser.
           </p>
           <div className="hero-actions">
@@ -71,7 +71,7 @@ export default function HomePage() {
 
       <section className="section" id="boards">
         <div className="section-head">
-          <p className="eyebrow">Drei Boards</p>
+          <p className="eyebrow">Vier Boards</p>
           <h2>Die Kollektion</h2>
           <p>
             Die angegebenen Preise sind Katalogpreise in Euro. Der Mehrwertsteuerausweis ist noch
@@ -97,9 +97,9 @@ export default function HomePage() {
             </p>
             <p>
               Manche suchen Stabilität für die ersten Wellen. Andere wollen ein vielseitiges Board
-              für den nächsten Schritt. Wieder andere brauchen eine kurze, klare Linie. Drei
-              Entwürfe, ein gemeinsamer Ausgangspunkt: Neugier auf das, was hinter der nächsten
-              Welle liegt.
+              für den nächsten Schritt. Wieder andere brauchen eine kurze, klare Linie. Das Volt
+              ist ein motorisiertes Board für flaches Wasser. Vier Entwürfe, ein gemeinsamer
+              Ausgangspunkt: Neugier auf das, was hinter der nächsten Welle liegt.
             </p>
             <Link className="button button-dark" href="/ueber-uns">
               Über KARTIVO
