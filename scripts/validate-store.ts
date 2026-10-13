@@ -28,7 +28,7 @@ const expected = [
   ["KART-WAVE-STARTER-001", "kartivo-wave-starter", 299, 5, "in_stock"],
   ["KART-OCEAN-CRUISER-001", "kartivo-ocean-cruiser", 449, 5, "in_stock"],
   ["KART-WAVE-PRO-001", "kartivo-wave-pro", 599, 5, "in_stock"],
-  ["KART-VOLT-ELECTRIC-001", "kartivo-volt-electric", 600, null, "out_of_stock"],
+  ["KART-VOLT-ELECTRIC-001", "kartivo-volt-electric", 600, 5, "in_stock"],
 ] as const;
 
 for (const [id, slug, price, stock, availability] of expected) {

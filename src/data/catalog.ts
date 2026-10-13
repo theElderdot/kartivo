@@ -222,7 +222,7 @@ export const products: readonly Product[] = [
       { label: "Farbe", value: "Graphit" },
       { label: "Niveau", value: "Fahrer mit Stand-Erfahrung" },
     ],
-    stockQuantity: null,
+    stockQuantity: 5,
     detailsConfirmed: sharedUnconfirmed,
     gtin: null,
     mpn: null,
