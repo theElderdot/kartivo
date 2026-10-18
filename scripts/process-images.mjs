@@ -39,6 +39,42 @@ const jobs = [
     description:
       "AI-generated lifestyle photograph of a surfer on an unbranded board. Not a product photo.",
   },
+  {
+    source: "aquavolt-wave-mini-water.jpg",
+    dest: "public/images/products/aquavolt-wave-mini.webp",
+    description:
+      "AI-generated concept photograph of the AQUAVOLT Wave Mini water scooter. Not a photograph of a manufactured product.",
+  },
+  {
+    source: "aquavolt-wave-mini-detail.jpg",
+    dest: "public/images/products/aquavolt-wave-mini-detail.webp",
+    description:
+      "AI-generated close-up concept photograph of the AQUAVOLT Wave Mini water scooter. Not a photograph of a manufactured product.",
+  },
+  {
+    source: "aquavolt-wave-mini-lake.jpg",
+    dest: "public/images/products/aquavolt-wave-mini-lake.webp",
+    description:
+      "AI-generated lakeside concept photograph of the AQUAVOLT Wave Mini water scooter. Not a photograph of a manufactured product.",
+  },
+  {
+    source: "aquavolt-wave-pro-water.jpg",
+    dest: "public/images/products/aquavolt-wave-pro.webp",
+    description:
+      "AI-generated concept photograph of the AQUAVOLT Wave Pro water scooter. Not a photograph of a manufactured product.",
+  },
+  {
+    source: "aquavolt-wave-pro-detail.jpg",
+    dest: "public/images/products/aquavolt-wave-pro-detail.webp",
+    description:
+      "AI-generated close-up concept photograph of the AQUAVOLT Wave Pro water scooter. Not a photograph of a manufactured product.",
+  },
+  {
+    source: "aquavolt-wave-pro-beach.jpg",
+    dest: "public/images/products/aquavolt-wave-pro-beach.webp",
+    description:
+      "AI-generated beach concept photograph of the AQUAVOLT Wave Pro water scooter. Not a photograph of a manufactured product.",
+  },
 ];
 
 const digitalSource =

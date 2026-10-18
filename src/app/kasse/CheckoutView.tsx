@@ -6,8 +6,18 @@ import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
 import { storeConfig } from "@/config/store";
 import { getProductBySku } from "@/data/catalog";
+import { trackPurchaseConversion } from "@/lib/ads";
 import { isPurchasable, orderShippingEur } from "@/lib/commerce";
 import { formatPrice } from "@/lib/format";
+
+/** Runs only after a payment provider returns a paid order id and total. */
+export function confirmPaidOrder(order: {
+  transactionId: string;
+  valueEur: number;
+  newCustomer?: boolean;
+}) {
+  trackPurchaseConversion(order);
+}
 
 export function CheckoutView() {
   const { lines, ready } = useCart();
@@ -70,9 +80,9 @@ export function CheckoutView() {
           className="button button-dark"
           type="button"
           disabled={!canOrder}
-          onClick={() =>
-            setResult("Keine Zahlung ausgeführt. Ein Zahlungsablauf ist nicht angebunden.")
-          }
+          onClick={() => {
+            setResult("Keine Zahlung ausgeführt. Ein Zahlungsablauf ist nicht angebunden.");
+          }}
         >
           Bestellung nicht möglich
         </button>

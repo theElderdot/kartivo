@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { ProductCard } from "@/components/ProductCard";
-import { products } from "@/data/catalog";
+import { MINI_WATER_SCOOTERS, SURFBOARDS, productsInCategory } from "@/data/catalog";
 import { itemListJsonLd } from "@/lib/jsonld";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -29,15 +29,21 @@ const faqs = [
   },
   {
     q: "Wie läuft eine Rückgabe?",
-    a: "Du hast 14 Tage Widerruf ab dem Erhalt der Ware. Die Kosten der Rücksendung trägst du, außer die Ware ist mangelhaft oder falsch geliefert. Die Erstattung läuft über den ursprünglichen Zahlungsweg.",
+    a: "Du hast 14 Tage Widerruf ab dem Erhalt der Ware. Die Rücksendung geht per Post und die Kosten trägst du, außer die Ware ist mangelhaft oder falsch geliefert. Die Erstattung erfolgt innerhalb von 14 Tagen auf dem ursprünglichen Zahlungsweg. Ein Umtausch ist nicht angeboten.",
   },
   {
     q: "Sind die Produktfotos die Boards, die geliefert werden?",
     a: "Nein. Es sind KI-generierte Konzeptfotos. Sie müssen vor dem Verkauf durch Aufnahmen der realen Boards ersetzt werden, falls die Herstellung abweicht.",
   },
+  {
+    q: "Sind die Mini Water Scooters kaufbar?",
+    a: "Nein. AQUAVOLT Wave Mini und Wave Pro sind Produktkonzepte mit Katalogpreisen. Bestand, technische Daten und Lieferumfang sind nicht geprüft. Sie stehen nicht im Produktfeed und können nicht in den Warenkorb.",
+  },
 ];
 
 export default function HomePage() {
+  const boards = productsInCategory(SURFBOARDS);
+  const scooters = productsInCategory(MINI_WATER_SCOOTERS);
   return (
     <>
       <JsonLd data={itemListJsonLd()} />
@@ -79,7 +85,24 @@ export default function HomePage() {
           </p>
         </div>
         <div className="product-grid">
-          {products.map((product) => (
+          {boards.map((product) => (
+            <ProductCard key={product.sku} product={product} />
+          ))}
+        </div>
+      </section>
+
+      <section className="section" id="scooters">
+        <div className="section-head">
+          <p className="eyebrow">AQUAVOLT</p>
+          <h2>Mini Water Scooters</h2>
+          <p>
+            Zwei kompakte Konzepte für Freizeit auf erlaubten Gewässern. Die Preise sind
+            Katalogpreise. Die Scooter werden nicht verkauft, solange Ware, Bestand und Angaben
+            nicht geprüft sind.
+          </p>
+        </div>
+        <div className="product-grid product-grid-two">
+          {scooters.map((product) => (
             <ProductCard key={product.sku} product={product} />
           ))}
         </div>
@@ -127,7 +150,7 @@ export default function HomePage() {
           </article>
           <article className="trust-card">
             <h3>Rückgabe</h3>
-            <p>14 Tage Widerruf ab Erhalt. Die Rücksendung zahlst du, außer die Ware ist mangelhaft oder falsch.</p>
+            <p>14 Tage Widerruf ab Erhalt, Rücksendung per Post auf deine Kosten. Erstattung innerhalb von 14 Tagen. Kein Umtausch.</p>
             <Link href="/rueckgabe">Rückgabe und Erstattung</Link>
           </article>
           <article className="trust-card">

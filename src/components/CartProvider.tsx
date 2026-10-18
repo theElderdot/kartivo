@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import { getProductBySku } from "@/data/catalog";
+import { canAddToCart } from "@/lib/commerce";
 import {
   CART_STORAGE_KEY,
   addLine,
@@ -38,10 +39,11 @@ function readStoredCart(): CartLine[] {
     if (!raw) return [];
     const parsed: unknown = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter(isCartLine).map((line) => ({
-      sku: line.sku,
-      quantity: clampQuantity(line.quantity, quantityCap(getProductBySku(line.sku)?.stockQuantity ?? null)),
-    }));
+    return parsed.filter(isCartLine).flatMap((line) => {
+      const product = getProductBySku(line.sku);
+      if (!product || !canAddToCart(product)) return [];
+      return [{ sku: line.sku, quantity: clampQuantity(line.quantity, quantityCap(product.stockQuantity)) }];
+    });
   } catch {
     return [];
   }
@@ -67,9 +69,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
       count: cartCount(lines),
       ready,
       add: (sku, quantity) =>
-        setLines((current) =>
-          addLine(current, sku, quantity, quantityCap(getProductBySku(sku)?.stockQuantity ?? null)),
-        ),
+        setLines((current) => {
+          const product = getProductBySku(sku);
+          if (!product || !canAddToCart(product)) return current;
+          return addLine(current, sku, quantity, quantityCap(product.stockQuantity));
+        }),
       setQuantity: (sku, quantity) =>
         setLines((current) =>
           setLineQuantity(

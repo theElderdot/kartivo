@@ -18,13 +18,26 @@ export const storeConfig = {
   currency: "EUR" as const,
 
   /**
-   * Manual launch switch. Product pages are indexable only when this is true.
-   * Keep false while placeholders, concept photos, or an unfinished checkout remain.
+   * Manual launch switch. Keep false while placeholders, concept photos,
+   * or an unfinished checkout remain. This does not control indexing.
    */
   readyForLaunch: false as boolean,
 
+  /**
+   * Google Merchant Center rejects product landing pages that send noindex.
+   * Cart and checkout stay disallowed in robots.txt.
+   */
+  indexPages: true as boolean,
+
   /** Set true only after a qualified review of the German/EU consumer pages. */
   legalReviewCompleted: false as boolean,
+
+  /**
+   * Google tag from the Ads account. The purchase event uses the label below and
+   * runs only after a paid order, with that order's total and transaction id.
+   */
+  googleAdsTagId: "AW-18507455330",
+  googleAdsPurchaseSendTo: "AW-18507455330/EqjDCPvB7J0dEOK2hflE",
 
   announcement: {
     /**
@@ -77,7 +90,7 @@ export const storeConfig = {
     confirmed: true as boolean,
     period: "14 Tage ab dem Tag, an dem die Ware eingegangen ist",
     procedure:
-      "Widerruf in Textform an die Kontaktdaten im Impressum, danach frankierte Rücksendung der Ware innerhalb von 14 Tagen nach dem Widerruf.",
+      "Widerruf in Textform, danach frankierte Rücksendung per Post innerhalb von 14 Tagen. Kein Umtausch, keine Abgabe an einem Übergabeort, keine Wiedereinlagerungsgebühr.",
     refundMethod: "Erstattung auf dem ursprünglichen Zahlungsweg",
     refundTiming:
       "Innerhalb von 14 Tagen nach Zugang des Widerrufs. Die Erstattung kann zurückgehalten werden, bis die Ware wieder bei uns ist oder du einen Nachweis der Rücksendung geschickt hast.",

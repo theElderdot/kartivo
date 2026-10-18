@@ -1,5 +1,5 @@
 import { siteUrl, storeConfig } from "@/config/store";
-import { products, type Product } from "@/data/catalog";
+import { feedProducts, type Product } from "@/data/catalog";
 import { googleAvailability, orderShippingEur } from "@/lib/commerce";
 import { feedPrice } from "@/lib/format";
 import { escapeXml } from "@/lib/xml";
@@ -19,8 +19,11 @@ function productItem(product: Product): string {
     `      <g:google_product_category>${storeConfig.googleProductCategory.id}</g:google_product_category>`,
     `      <g:product_type>${escapeXml(product.feedProductType)}</g:product_type>`,
     `      <g:color>${escapeXml(product.feedColor)}</g:color>`,
-    `      <g:size>${escapeXml(product.lengthLabel)}</g:size>`,
   ];
+
+  if (product.lengthLabel) {
+    lines.push(`      <g:size>${escapeXml(product.lengthLabel)}</g:size>`);
+  }
 
   if (product.mpn) lines.push(`      <g:mpn>${escapeXml(product.mpn)}</g:mpn>`);
   if (product.gtin) lines.push(`      <g:gtin>${escapeXml(product.gtin)}</g:gtin>`);
@@ -34,10 +37,10 @@ function productItem(product: Product): string {
 
   const details: Array<[string, string]> = [
     ["Produkttyp", product.productType],
-    ["Länge", product.lengthLabel],
     ["Farbe", product.color],
     ["Niveau", product.skillLevel],
   ];
+  if (product.lengthLabel) details.splice(1, 0, ["Länge", product.lengthLabel]);
   for (const [name, value] of details) {
     lines.push("      <g:product_detail>");
     lines.push("        <g:section_name>Produkt</g:section_name>");
@@ -68,7 +71,7 @@ function productItem(product: Product): string {
 
 /** RSS 2.0 feed with the Google Merchant Center namespace. No customer data. */
 export function buildGoogleShoppingFeed(): string {
-  const items = products.map(productItem).join("\n");
+  const items = feedProducts().map(productItem).join("\n");
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">',

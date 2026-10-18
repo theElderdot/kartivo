@@ -1,5 +1,5 @@
 import { siteUrl, storeConfig } from "@/config/store";
-import { products, type Product } from "@/data/catalog";
+import { feedProducts, productImages, type Product } from "@/data/catalog";
 import { schemaAvailability, orderShippingEur } from "@/lib/commerce";
 import { schemaPrice } from "@/lib/format";
 
@@ -73,6 +73,9 @@ export function productJsonLd(product: Product) {
       merchantReturnDays: 14,
       returnMethod: "https://schema.org/ReturnByMail",
       returnFees: "https://schema.org/ReturnFeesCustomerResponsibility",
+      returnLabelSource: "https://schema.org/ReturnLabelCustomerResponsibility",
+      refundType: "https://schema.org/FullRefund",
+      merchantReturnLink: `${siteUrl}/rueckgabe`,
     };
   }
 
@@ -81,7 +84,7 @@ export function productJsonLd(product: Product) {
     "@type": "Product",
     name: product.title,
     description: product.description,
-    image: [`${siteUrl}${product.image}`],
+    image: productImages(product).map((image) => `${siteUrl}${image.src}`),
     sku: product.sku,
     brand: {
       "@type": "Brand",
@@ -95,6 +98,23 @@ export function productJsonLd(product: Product) {
   if (product.gtin) data.gtin = product.gtin;
   if (product.mpn) data.mpn = product.mpn;
   return data;
+}
+
+export function returnPolicyJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "MerchantReturnPolicy",
+    name: "Rückgabe Deutschland",
+    url: `${siteUrl}/rueckgabe`,
+    applicableCountry: "DE",
+    returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+    merchantReturnDays: 14,
+    returnMethod: "https://schema.org/ReturnByMail",
+    returnFees: "https://schema.org/ReturnFeesCustomerResponsibility",
+    returnLabelSource: "https://schema.org/ReturnLabelCustomerResponsibility",
+    refundType: "https://schema.org/FullRefund",
+    merchantReturnLink: `${siteUrl}/rueckgabe`,
+  };
 }
 
 export function breadcrumbJsonLd(product: Product) {
@@ -119,7 +139,7 @@ export function itemListJsonLd() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "KARTIVO Surfboards",
-    itemListElement: products.map((product, index) => ({
+    itemListElement: feedProducts().map((product, index) => ({
       "@type": "ListItem",
       position: index + 1,
       url: `${siteUrl}/products/${product.slug}`,

@@ -5,7 +5,15 @@ import type { Metadata } from "next";
 import { AddToCart } from "@/components/AddToCart";
 import { PaymentNote, ShippingNote, TaxNote } from "@/components/CommerceNotes";
 import { JsonLd } from "@/components/JsonLd";
-import { imageCaption, products, unverifiedSpecTopics, getProductBySlug } from "@/data/catalog";
+import {
+  imageCaption,
+  products,
+  productsInCategory,
+  productCategory,
+  productImages,
+  unverifiedSpecTopics,
+  getProductBySlug,
+} from "@/data/catalog";
 import { isPurchasable, stockLabel } from "@/lib/commerce";
 import { formatPrice } from "@/lib/format";
 import { breadcrumbJsonLd, productJsonLd } from "@/lib/jsonld";
@@ -25,7 +33,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const { slug } = await params;
   const product = getProductBySlug(slug);
   if (!product) return { title: "Seite nicht gefunden" };
-  return pageMetadata({
+  const meta = pageMetadata({
     title: product.title,
     description: product.description,
     path: `/products/${product.slug}`,
@@ -33,6 +41,10 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     imageAlt: product.imageAlt,
     absoluteTitle: true,
   });
+  if (product.publishToFeed === false) {
+    return { ...meta, robots: { index: false, follow: true } };
+  }
+  return meta;
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
@@ -40,7 +52,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const product = getProductBySlug(slug);
   if (!product) notFound();
 
-  const others = products.filter((item) => item.sku !== product.sku);
+  const others = productsInCategory(productCategory(product)).filter((item) => item.sku !== product.sku);
+  const images = productImages(product);
+  const absentTopics = product.absentTopics ?? unverifiedSpecTopics;
+  const concept = product.publishToFeed === false;
   const specStatus = product.detailsConfirmed
     ? "Vom Händler bestätigt"
     : "Noch nicht an der Ware geprüft";
@@ -56,19 +71,35 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <figure className="gallery" aria-label="Produktbilder">
           <div className="gallery-frame">
             <Image
-              src={product.image}
-              alt={product.imageAlt}
+              src={images[0].src}
+              alt={images[0].alt}
               fill
               priority
               sizes="(max-width: 900px) 100vw, 50vw"
             />
           </div>
+          {images.length > 1 ? (
+            <div className="gallery-thumbs">
+              {images.slice(1).map((image) => (
+                <div key={image.src} className="gallery-thumb">
+                  <Image src={image.src} alt={image.alt} fill sizes="(max-width: 900px) 45vw, 20vw" />
+                </div>
+              ))}
+            </div>
+          ) : null}
           <figcaption className="image-note">{imageCaption}</figcaption>
         </figure>
         <div>
           <p className="eyebrow">{product.skillLevel}</p>
           <h1>{product.title}</h1>
           <p className="price">{formatPrice(product.price)}</p>
+          {concept ? (
+            <p className="status-note">
+              Katalogpreis für ein Produktkonzept. Ware, Bestand und technische Daten sind nicht
+              geprüft. Dieser Artikel wird nicht verkauft und nicht an Google Merchant Center
+              übergeben.
+            </p>
+          ) : null}
           <TaxNote />
           <p>{product.description}</p>
           <dl className="facts">
@@ -78,8 +109,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <dd>{product.sku}</dd>
             <dt>Farbe</dt>
             <dd>{product.color}</dd>
-            <dt>Länge</dt>
-            <dd>{product.lengthLabel}</dd>
+            {product.lengthLabel ? (
+              <>
+                <dt>Länge</dt>
+                <dd>{product.lengthLabel}</dd>
+              </>
+            ) : null}
             <dt>Zustand</dt>
             <dd>Neu</dd>
             <dt>Bestand</dt>
@@ -93,11 +128,22 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <AddToCart sku={product.sku} purchasable={isPurchasable(product)} />
           <ShippingNote goodsSubtotal={product.price} />
           <p className="fine">
+            <Link href="/versand">Versand und Lieferung</Link>
+            {" · "}
             <Link href="/rueckgabe">Rückgabe und Erstattung</Link>
           </p>
           <PaymentNote />
         </div>
       </div>
+
+      <section>
+        <h2>Lieferumfang</h2>
+        <p>
+          {concept
+            ? "Der Lieferumfang ist nicht bestätigt. Akku, Ladegerät und weiteres Zubehör werden nicht als enthalten angegeben."
+            : "Der Lieferumfang steht in den Katalogangaben. Nicht genannte Teile sind nicht enthalten."}
+        </p>
+      </section>
 
       <section>
         <h2>Angaben aus dem Katalog</h2>
@@ -126,7 +172,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             Nicht angegeben und deshalb hier nicht erfunden:
           </p>
           <ul>
-            {unverifiedSpecTopics.map((topic) => (
+            {absentTopics.map((topic) => (
               <li key={topic}>{topic}</li>
             ))}
           </ul>
@@ -134,7 +180,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </section>
 
       <section>
-        <h2>Die anderen Boards</h2>
+        <h2>{concept ? "Weiteres aus dieser Kategorie" : "Die anderen Boards"}</h2>
         <div className="guide-grid">
           {others.map((item) => (
             <article key={item.sku} className="guide-card">

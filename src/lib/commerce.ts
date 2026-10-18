@@ -39,6 +39,10 @@ export function stockLabel(product: Product): string {
   return "Derzeit nicht auf Lager";
 }
 
+export function canAddToCart(product: Product): boolean {
+  return product.stockQuantity !== null && product.stockQuantity > 0;
+}
+
 export function isPurchasable(product: Product): boolean {
   return (
     storeConfig.readyForLaunch &&

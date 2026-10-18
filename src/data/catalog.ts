@@ -13,6 +13,14 @@ export type CatalogSpec = {
   value: string;
 };
 
+export type ProductImage = {
+  src: string;
+  alt: string;
+};
+
+export const SURFBOARDS = "Surfboards";
+export const MINI_WATER_SCOOTERS = "Mini Water Scooters";
+
 export type Product = {
   /** Stable Google Merchant Center offer id. */
   id: string;
@@ -29,17 +37,27 @@ export type Product = {
   price: number;
   currency: "EUR";
   condition: "new";
-  brand: "KARTIVO";
+  brand: string;
   productType: string;
   feedProductType: string;
-  lengthLabel: string;
+  lengthLabel: string | null;
   /** Full color description shown on the page. */
   color: string;
   /** Primary color submitted to Google. */
   feedColor: string;
   skillLevel: string;
+  /** Shop grouping. Boards stay in Surfboards when this is omitted. */
+  category?: string;
+  /**
+   * False keeps an unverified concept out of the Google feed and the sitemap.
+   * Boards stay listed because their stock was confirmed.
+   */
+  publishToFeed?: boolean;
   image: string;
   imageAlt: string;
+  gallery?: readonly ProductImage[];
+  /** Topics this product must not invent. Falls back to the board list. */
+  absentTopics?: readonly string[];
   specs: readonly CatalogSpec[];
   /**
    * null = the merchant has not confirmed a quantity.
@@ -227,6 +245,132 @@ export const products: readonly Product[] = [
     gtin: null,
     mpn: null,
   },
+  {
+    id: "AQV-WAVE-MINI-001",
+    sku: "AQV-WAVE-MINI-001",
+    slug: "aquavolt-wave-mini",
+    name: "AQUAVOLT Wave Mini",
+    title: "AQUAVOLT Wave Mini kompakter Wasserscooter Weiß",
+    description:
+      "Der AQUAVOLT Wave Mini ist ein kompaktes Konzept für einen persönlichen Wasserscooter. Die Form ist auf Tragbarkeit, Lagerung und Transport ausgelegt und für Freizeit auf erlaubten Gewässern gedacht. Geschwindigkeit, Akku, Wasserdichtigkeit, Maße und der Lieferumfang sind nicht geprüft und werden deshalb nicht angegeben.",
+    cardDescription:
+      "Kompaktes Wasserscooter-Konzept in Weiß und Eisblau, gedacht für Freizeit auf erlaubten Gewässern.",
+    highlights: [
+      "Kompaktes, tragbares Konzept",
+      "Griff an der Oberseite",
+      "Stromlinienförmige Außenform",
+      "Für Freizeit auf erlaubten Gewässern",
+    ],
+    price: 499,
+    currency: "EUR",
+    condition: "new",
+    brand: "AQUAVOLT",
+    productType: "Mini Water Scooter",
+    feedProductType: "Mini Water Scooters",
+    lengthLabel: null,
+    color: "Weiß und Eisblau",
+    feedColor: "Weiß",
+    skillLevel: "Freizeit",
+    category: MINI_WATER_SCOOTERS,
+    publishToFeed: false,
+    image: "/images/products/aquavolt-wave-mini.webp",
+    imageAlt:
+      "Konzeptfoto des weißen AQUAVOLT Wave Mini Wasserscooters mit Griff, auf klarem blauem Wasser",
+    gallery: [
+      {
+        src: "/images/products/aquavolt-wave-mini-detail.webp",
+        alt: "Nahansicht des weißen AQUAVOLT Wave Mini mit Griff und Schriftzug auf blauem Wasser",
+      },
+      {
+        src: "/images/products/aquavolt-wave-mini-lake.webp",
+        alt: "Konzeptfoto des AQUAVOLT Wave Mini am Ufer eines ruhigen Sees",
+      },
+    ],
+    absentTopics: [
+      "Maße, Gewicht und Tragkraft",
+      "Geschwindigkeit und Reichweite",
+      "Akku, Ladezeit und Motorleistung",
+      "Wasserdichtigkeit und Zertifizierungen",
+      "Lieferumfang",
+      "Herstelleradresse und Garantie",
+      "GTIN und MPN",
+    ],
+    specs: [
+      { label: "Marke", value: "AQUAVOLT" },
+      { label: "SKU", value: "AQV-WAVE-MINI-001" },
+      { label: "Kategorie", value: "Mini Water Scooter" },
+      { label: "Einsatz", value: "Freizeit auf erlaubten Gewässern" },
+      { label: "Form", value: "Kompakter Entwurf mit Griff" },
+      { label: "Farbe", value: "Weiß und Eisblau, Konzeptfarbe" },
+    ],
+    stockQuantity: null,
+    detailsConfirmed: sharedUnconfirmed,
+    gtin: null,
+    mpn: null,
+  },
+  {
+    id: "AQV-WAVE-PRO-001",
+    sku: "AQV-WAVE-PRO-001",
+    slug: "aquavolt-wave-pro",
+    name: "AQUAVOLT Wave Pro",
+    title: "AQUAVOLT Wave Pro kompakter Wasserscooter Graphit",
+    description:
+      "Der AQUAVOLT Wave Pro ist ein kompakteres Premium-Konzept für persönliche Wassermobilität. Die dunkle Form mit türkisem Streifen ist als tragbare Alternative zu größeren Wassermotorrädern gedacht, nur für Freizeit auf erlaubten Gewässern. Geschwindigkeit, Akku, Wasserdichtigkeit, Maße und der Lieferumfang sind nicht geprüft und werden nicht angegeben.",
+    cardDescription:
+      "Dunkles Wasserscooter-Konzept mit türkisem Streifen, gedacht als tragbare Freizeitform.",
+    highlights: [
+      "Kompakter Körper für den Transport",
+      "Steuergriff auf der Oberseite",
+      "Graphitfarbenes Konzept mit türkisem Streifen",
+      "Nur für erlaubte Gewässer",
+    ],
+    price: 799,
+    currency: "EUR",
+    condition: "new",
+    brand: "AQUAVOLT",
+    productType: "Mini Water Scooter",
+    feedProductType: "Mini Water Scooters",
+    lengthLabel: null,
+    color: "Graphit mit türkisem Streifen",
+    feedColor: "Graphit",
+    skillLevel: "Freizeit",
+    category: MINI_WATER_SCOOTERS,
+    publishToFeed: false,
+    image: "/images/products/aquavolt-wave-pro.webp",
+    imageAlt:
+      "Konzeptfoto des graphitfarbenen AQUAVOLT Wave Pro Wasserscooters mit türkisem Streifen auf türkisem Wasser",
+    gallery: [
+      {
+        src: "/images/products/aquavolt-wave-pro-detail.webp",
+        alt: "Nahansicht des graphitfarbenen AQUAVOLT Wave Pro mit Steuergriff auf türkisem Wasser",
+      },
+      {
+        src: "/images/products/aquavolt-wave-pro-beach.webp",
+        alt: "Konzeptfoto des AQUAVOLT Wave Pro am Rand eines leeren Strandes",
+      },
+    ],
+    absentTopics: [
+      "Maße, Gewicht und Tragkraft",
+      "Geschwindigkeit und Reichweite",
+      "Akku, Ladezeit und Motorleistung",
+      "Wasserdichtigkeit und Zertifizierungen",
+      "Lieferumfang",
+      "Herstelleradresse und Garantie",
+      "GTIN und MPN",
+    ],
+    specs: [
+      { label: "Marke", value: "AQUAVOLT" },
+      { label: "SKU", value: "AQV-WAVE-PRO-001" },
+      { label: "Kategorie", value: "Mini Water Scooter" },
+      { label: "Einsatz", value: "Freizeit auf erlaubten Gewässern" },
+      { label: "Form", value: "Kompakter Entwurf mit Steuergriff" },
+      { label: "Farbe", value: "Graphit mit türkisem Streifen, Konzeptfarbe" },
+    ],
+    stockQuantity: null,
+    detailsConfirmed: sharedUnconfirmed,
+    gtin: null,
+    mpn: null,
+  },
 ];
 
 /** Intentionally absent. Do not fill these in without checking the real board. */
@@ -249,6 +393,23 @@ export function getProductBySku(sku: string): Product | undefined {
   return products.find((product) => product.sku === sku);
 }
 
+export function productCategory(product: Product): string {
+  return product.category ?? SURFBOARDS;
+}
+
+/** Confirmed surfboard offers. Unverified concepts stay on the site and out of the feed. */
+export function feedProducts(): Product[] {
+  return products.filter((product) => product.publishToFeed !== false);
+}
+
+export function productsInCategory(category: string): Product[] {
+  return products.filter((product) => productCategory(product) === category);
+}
+
+export function productImages(product: Product): ProductImage[] {
+  return [{ src: product.image, alt: product.imageAlt }, ...(product.gallery ?? [])];
+}
+
 export function searchProducts(query: string): Product[] {
   const needle = query.trim().toLowerCase();
   if (!needle) return [...products];
@@ -261,6 +422,8 @@ export function searchProducts(query: string): Product[] {
       product.skillLevel,
       product.sku,
       product.productType,
+      productCategory(product),
+      product.brand,
     ]
       .join(" ")
       .toLowerCase();
@@ -271,5 +434,5 @@ export function searchProducts(query: string): Product[] {
 export const imageCaption = storeImageCaption();
 
 function storeImageCaption(): string {
-  return "Konzeptfoto, KI-generiert. Es zeigt den gestalterischen Entwurf und kein geprüftes Foto eines ausgelieferten Boards. Vor dem Verkauf durch eine Aufnahme des realen Produkts ersetzen, falls die Herstellung abweicht.";
+  return "Konzeptfoto, KI-generiert. Es zeigt den gestalterischen Entwurf und kein geprüftes Foto eines ausgelieferten Produkts. Vor dem Verkauf durch eine Aufnahme der realen Ware ersetzen, falls die Herstellung abweicht.";
 }

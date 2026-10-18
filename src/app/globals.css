@@ -185,6 +185,8 @@ button, input { font: inherit; }
   grid-template-columns: repeat(3, 1fr);
   gap: 1.2rem;
 }
+.product-grid-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.category-block { margin-top: 3rem; }
 .product-card, .trust-card, .guide-card, .panel {
   background: var(--white);
   border: 1px solid var(--line);
@@ -269,6 +271,20 @@ button, input { font: inherit; }
   align-items: start;
 }
 .gallery-frame { border-radius: 1.3rem; }
+.gallery-thumbs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+}
+.gallery-thumb {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 0.9rem;
+  background: var(--sand-100);
+}
+.gallery-thumb img { object-fit: cover; }
 .price { font-size: 2rem; color: var(--ocean-900); margin: 0.2rem 0; }
 .buy-form { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: end; margin: 1rem 0; }
 .buy-form label, .field { display: grid; gap: 0.3rem; }
@@ -296,7 +312,7 @@ button, input { font: inherit; }
 .field textarea { border-radius: 1rem; min-height: 140px; }
 
 @media (max-width: 900px) {
-  .product-grid, .trust-grid, .guide-grid, .story, .product-layout, .footer-grid { grid-template-columns: 1fr; }
+  .product-grid, .product-grid-two, .trust-grid, .guide-grid, .story, .product-layout, .footer-grid { grid-template-columns: 1fr; }
   .nav-toggle { display: inline-flex; }
   .nav {
     display: none;

@@ -3,6 +3,7 @@ import { Fraunces, Outfit } from "next/font/google";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { CartProvider } from "@/components/CartProvider";
 import { Footer } from "@/components/Footer";
+import { GoogleAdsTag } from "@/components/GoogleAdsTag";
 import { Header } from "@/components/Header";
 import { JsonLd } from "@/components/JsonLd";
 import { PreviewBanner } from "@/components/PreviewBanner";
@@ -23,7 +24,7 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-const indexing = robotsPolicy(storeConfig.readyForLaunch);
+const indexing = robotsPolicy(storeConfig.indexPages);
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="de" className={`${outfit.variable} ${fraunces.variable}`}>
       <body>
+        <GoogleAdsTag />
         <JsonLd data={websiteJsonLd()} />
         <CartProvider>
           <a className="skip-link" href="#inhalt">

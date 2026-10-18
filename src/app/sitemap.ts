@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteUrl } from "@/config/store";
-import { products } from "@/data/catalog";
+import { feedProducts } from "@/data/catalog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
@@ -20,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...paths.map((path) => ({ url: `${siteUrl}${path}` })),
-    ...products.map((product) => ({
+    ...feedProducts().map((product) => ({
       url: `${siteUrl}/products/${product.slug}`,
       images: [`${siteUrl}${product.image}`],
     })),
