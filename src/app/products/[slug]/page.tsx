@@ -6,6 +6,7 @@ import { AddToCart } from "@/components/AddToCart";
 import { PaymentNote, ShippingNote, TaxNote } from "@/components/CommerceNotes";
 import { JsonLd } from "@/components/JsonLd";
 import {
+  AQUAVOLT_BOARDS,
   imageCaption,
   products,
   productsInCategory,
@@ -41,9 +42,6 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     imageAlt: product.imageAlt,
     absoluteTitle: true,
   });
-  if (product.publishToFeed === false) {
-    return { ...meta, robots: { index: false, follow: true } };
-  }
   return meta;
 }
 
@@ -55,7 +53,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const others = productsInCategory(productCategory(product)).filter((item) => item.sku !== product.sku);
   const images = productImages(product);
   const absentTopics = product.absentTopics ?? unverifiedSpecTopics;
-  const concept = product.publishToFeed === false;
+  const concept = productCategory(product) === AQUAVOLT_BOARDS;
   const specStatus = product.detailsConfirmed
     ? "Vom Händler bestätigt"
     : "Noch nicht an der Ware geprüft";
@@ -95,9 +93,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <p className="price">{formatPrice(product.price)}</p>
           {concept ? (
             <p className="status-note">
-              Katalogpreis für ein Produktkonzept. Ware, Bestand und technische Daten sind nicht
-              geprüft. Dieser Artikel wird nicht verkauft und nicht an Google Merchant Center
-              übergeben.
+              Katalogpreis für ein Board ohne Motor und ohne Segel. Technische Daten und Lieferumfang
+              sind nicht geprüft. Der Bestand ist noch nicht bestätigt, deshalb steht im Feed nicht
+              vorrätig. Eine Bestellung ist nicht möglich.
             </p>
           ) : null}
           <TaxNote />

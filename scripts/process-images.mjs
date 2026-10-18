@@ -40,40 +40,16 @@ const jobs = [
       "AI-generated lifestyle photograph of a surfer on an unbranded board. Not a product photo.",
   },
   {
-    source: "aquavolt-wave-mini-water.jpg",
-    dest: "public/images/products/aquavolt-wave-mini.webp",
+    source: "aquavolt-drift-bodyboard.jpg",
+    dest: "public/images/products/aquavolt-drift-bodyboard.webp",
     description:
-      "AI-generated concept photograph of the AQUAVOLT Wave Mini water scooter. Not a photograph of a manufactured product.",
+      "AI-generated concept photograph of the AQUAVOLT Drift bodyboard. Not a photograph of a manufactured board. No motor.",
   },
   {
-    source: "aquavolt-wave-mini-detail.jpg",
-    dest: "public/images/products/aquavolt-wave-mini-detail.webp",
+    source: "aquavolt-glide-skimboard.jpg",
+    dest: "public/images/products/aquavolt-glide-skimboard.webp",
     description:
-      "AI-generated close-up concept photograph of the AQUAVOLT Wave Mini water scooter. Not a photograph of a manufactured product.",
-  },
-  {
-    source: "aquavolt-wave-mini-lake.jpg",
-    dest: "public/images/products/aquavolt-wave-mini-lake.webp",
-    description:
-      "AI-generated lakeside concept photograph of the AQUAVOLT Wave Mini water scooter. Not a photograph of a manufactured product.",
-  },
-  {
-    source: "aquavolt-wave-pro-water.jpg",
-    dest: "public/images/products/aquavolt-wave-pro.webp",
-    description:
-      "AI-generated concept photograph of the AQUAVOLT Wave Pro water scooter. Not a photograph of a manufactured product.",
-  },
-  {
-    source: "aquavolt-wave-pro-detail.jpg",
-    dest: "public/images/products/aquavolt-wave-pro-detail.webp",
-    description:
-      "AI-generated close-up concept photograph of the AQUAVOLT Wave Pro water scooter. Not a photograph of a manufactured product.",
-  },
-  {
-    source: "aquavolt-wave-pro-beach.jpg",
-    dest: "public/images/products/aquavolt-wave-pro-beach.webp",
-    description:
-      "AI-generated beach concept photograph of the AQUAVOLT Wave Pro water scooter. Not a photograph of a manufactured product.",
+      "AI-generated concept photograph of the AQUAVOLT Glide skimboard. Not a photograph of a manufactured board. No motor.",
   },
 ];
 
@@ -86,8 +62,12 @@ function hasSourceType(value) {
   return /trainedAlgorithmicMedia/i.test(text);
 }
 
+const only = process.argv[2];
+const selected = only ? jobs.filter((job) => job.dest.includes(only) || job.source.includes(only)) : jobs;
+if (selected.length === 0) throw new Error(`No image job matches ${only}`);
+
 try {
-  for (const job of jobs) {
+  for (const job of selected) {
     const source = path.join(assets, job.source);
     const dest = path.join(root, job.dest);
     await mkdir(path.dirname(dest), { recursive: true });
@@ -97,7 +77,9 @@ try {
     const width = meta.width ?? 0;
     const height = meta.height ?? 0;
     const productImage = job.dest.includes("/products/");
-    if (productImage && (width < 1000 || height < 1000)) {
+    const longSide = Math.max(width, height);
+    const shortSide = Math.min(width, height);
+    if (productImage && (longSide < 1000 || shortSide < 500)) {
       throw new Error(`${job.source} is ${width}x${height}. Refusing to upscale.`);
     }
     if (width < 500 || height < 500) {

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { ProductCard } from "@/components/ProductCard";
-import { MINI_WATER_SCOOTERS, SURFBOARDS, productsInCategory } from "@/data/catalog";
+import { AQUAVOLT_BOARDS, SURFBOARDS, productsInCategory } from "@/data/catalog";
 import { itemListJsonLd } from "@/lib/jsonld";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -36,14 +36,14 @@ const faqs = [
     a: "Nein. Es sind KI-generierte Konzeptfotos. Sie müssen vor dem Verkauf durch Aufnahmen der realen Boards ersetzt werden, falls die Herstellung abweicht.",
   },
   {
-    q: "Sind die Mini Water Scooters kaufbar?",
-    a: "Nein. AQUAVOLT Wave Mini und Wave Pro sind Produktkonzepte mit Katalogpreisen. Bestand, technische Daten und Lieferumfang sind nicht geprüft. Sie stehen nicht im Produktfeed und können nicht in den Warenkorb.",
+    q: "Was ist aus den Wasserscootern geworden?",
+    a: "Die beiden motorisierten Scooter sind ersetzt. Im Shop sind jetzt das AQUAVOLT Drift Bodyboard für 149 Euro und das AQUAVOLT Glide Skimboard für 119 Euro. Beide haben keinen Motor und kein Segel. Der Bestand ist noch nicht bestätigt.",
   },
 ];
 
 export default function HomePage() {
   const boards = productsInCategory(SURFBOARDS);
-  const scooters = productsInCategory(MINI_WATER_SCOOTERS);
+  const aquavoltBoards = productsInCategory(AQUAVOLT_BOARDS);
   return (
     <>
       <JsonLd data={itemListJsonLd()} />
@@ -91,18 +91,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section" id="scooters">
+      <section className="section" id="aquavolt">
         <div className="section-head">
           <p className="eyebrow">AQUAVOLT</p>
-          <h2>Mini Water Scooters</h2>
+          <h2>Bodyboard und Skimboard</h2>
           <p>
-            Zwei kompakte Konzepte für Freizeit auf erlaubten Gewässern. Die Preise sind
-            Katalogpreise. Die Scooter werden nicht verkauft, solange Ware, Bestand und Angaben
-            nicht geprüft sind.
+            Zwei Boards ohne Motor und ohne Segel. Drift kostet 149 Euro, Glide 119 Euro. Der
+            Bestand ist noch nicht bestätigt. Technische Daten sind nicht geprüft, und eine
+            Bestellung ist noch nicht möglich.
           </p>
         </div>
         <div className="product-grid product-grid-two">
-          {scooters.map((product) => (
+          {aquavoltBoards.map((product) => (
             <ProductCard key={product.sku} product={product} />
           ))}
         </div>

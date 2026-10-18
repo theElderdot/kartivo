@@ -1,5 +1,5 @@
 import { siteUrl, storeConfig } from "@/config/store";
-import { feedProducts, type Product } from "@/data/catalog";
+import { feedProducts, productImages, type Product } from "@/data/catalog";
 import { googleAvailability, orderShippingEur } from "@/lib/commerce";
 import { feedPrice } from "@/lib/format";
 import { escapeXml } from "@/lib/xml";
@@ -12,14 +12,21 @@ function productItem(product: Product): string {
     `      <g:description>${escapeXml(product.description)}</g:description>`,
     `      <g:link>${escapeXml(`${siteUrl}/products/${product.slug}`)}</g:link>`,
     `      <g:image_link>${escapeXml(`${siteUrl}${product.image}`)}</g:image_link>`,
+  ];
+
+  for (const image of productImages(product).slice(1)) {
+    lines.push(`      <g:additional_image_link>${escapeXml(`${siteUrl}${image.src}`)}</g:additional_image_link>`);
+  }
+
+  lines.push(
     `      <g:availability>${googleAvailability(product)}</g:availability>`,
     `      <g:price>${feedPrice(product.price)}</g:price>`,
     `      <g:condition>${product.condition}</g:condition>`,
     `      <g:brand>${escapeXml(product.brand)}</g:brand>`,
-    `      <g:google_product_category>${storeConfig.googleProductCategory.id}</g:google_product_category>`,
+    `      <g:google_product_category>${product.googleProductCategoryId ?? storeConfig.googleProductCategory.id}</g:google_product_category>`,
     `      <g:product_type>${escapeXml(product.feedProductType)}</g:product_type>`,
     `      <g:color>${escapeXml(product.feedColor)}</g:color>`,
-  ];
+  );
 
   if (product.lengthLabel) {
     lines.push(`      <g:size>${escapeXml(product.lengthLabel)}</g:size>`);

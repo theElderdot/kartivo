@@ -1,25 +1,26 @@
 import { ProductCard } from "@/components/ProductCard";
-import { MINI_WATER_SCOOTERS, SURFBOARDS, productsInCategory } from "@/data/catalog";
+import { AQUAVOLT_BOARDS, SURFBOARDS, productsInCategory } from "@/data/catalog";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
   title: "Shop",
   description:
-    "KARTIVO Surfboards und die AQUAVOLT Mini Water Scooters. Die Scooter sind Produktkonzepte und noch nicht im Verkauf.",
+    "KARTIVO Surfboards plus AQUAVOLT Drift Bodyboard und AQUAVOLT Glide Skimboard. Beide ohne Motor und ohne Segel.",
   path: "/shop",
 });
 
 export default function ShopPage() {
   const boards = productsInCategory(SURFBOARDS);
-  const scooters = productsInCategory(MINI_WATER_SCOOTERS);
+  const aquavoltBoards = productsInCategory(AQUAVOLT_BOARDS);
   return (
     <div className="page-wrap">
       <header className="page-intro">
         <p className="eyebrow">Shop</p>
-        <h1>Boards und Mini Water Scooters</h1>
+        <h1>Boards ohne Motor</h1>
         <p>
-          Vier KARTIVO Boards mit bestätigtem Bestand. Darunter zwei AQUAVOLT Konzepte. Der
-          Steuerausweis ist noch nicht bestätigt.
+          Vier KARTIVO Surfboards mit bestätigtem Bestand. Dazu das AQUAVOLT Drift Bodyboard für
+          149 Euro und das AQUAVOLT Glide Skimboard für 119 Euro. Beide ohne Motor und ohne Segel.
+          Ihr Bestand ist noch nicht bestätigt. Der Steuerausweis ist noch nicht bestätigt.
         </p>
       </header>
       <section>
@@ -36,15 +37,14 @@ export default function ShopPage() {
       <section className="category-block">
         <div className="section-head">
           <p className="eyebrow">AQUAVOLT</p>
-          <h2>Mini Water Scooters</h2>
+          <h2>Bodyboard und Skimboard</h2>
           <p>
-            Kompakte Entwürfe für Freizeit auf erlaubten Gewässern. Leicht zu transportieren und
-            zu lagern, mit einer klaren, modernen Form. Geschwindigkeit, Akku, Zertifizierung und
-            Lieferumfang sind nicht geprüft und werden nicht behauptet.
+            Kein Motor, kein Akku und kein Segel. Maße, Material und Lieferumfang sind nicht
+            geprüft.
           </p>
         </div>
         <div className="product-grid product-grid-two">
-          {scooters.map((product) => (
+          {aquavoltBoards.map((product) => (
             <ProductCard key={product.sku} product={product} />
           ))}
         </div>

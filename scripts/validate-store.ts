@@ -21,7 +21,7 @@ function check(condition: boolean, message: string) {
 }
 
 check(products.length === 6, "Catalog must contain the four boards and two scooter concepts");
-check(feedProducts().length === 4, "Only the confirmed boards belong in the Google feed");
+check(feedProducts().length === 6, "Boards and both scooters belong in the Google feed");
 check(new Set(products.map((product) => product.id)).size === products.length, "Product ids must be unique");
 check(new Set(products.map((product) => product.slug)).size === products.length, "Slugs must be unique");
 
@@ -71,9 +71,9 @@ check(!layoutSource.includes('index: false, follow: false }'), "noindex must not
 
 const offered = feedProducts();
 
-for (const [id, slug, price] of [
-  ["AQV-WAVE-MINI-001", "aquavolt-wave-mini", 499],
-  ["AQV-WAVE-PRO-001", "aquavolt-wave-pro", 799],
+for (const [id, slug, price, categoryId] of [
+  ["AQV-DRIFT-BODY-001", "aquavolt-drift-bodyboard", 149, 6287],
+  ["AQV-GLIDE-SKIM-001", "aquavolt-glide-skimboard", 119, 6286],
 ] as const) {
   const product = products.find((item) => item.id === id);
   check(Boolean(product), `Missing ${id}`);
@@ -85,9 +85,11 @@ for (const [id, slug, price] of [
   check(product.gtin === null && product.mpn === null, `${id} must not invent an identifier`);
   check(product.stockQuantity === null, `${id} stock must stay unconfirmed`);
   check(product.detailsConfirmed === false, `${id} specs must stay unconfirmed`);
-  check(product.publishToFeed === false, `${id} must stay out of the feed`);
-  check(googleAvailability(product) === "out_of_stock", `${id} is not in stock`);
-  check((product.gallery ?? []).length === 2, `${id} needs two extra concept photos`);
+  check(product.publishToFeed !== false, `${id} must be in the feed`);
+  check(product.googleProductCategoryId === categoryId, `${id} category`);
+  check(googleAvailability(product) === "out_of_stock", `${id} stays out of stock until a count is confirmed`);
+  check((product.gallery ?? []).length === 0, `${id} uses one image`);
+  check(!/scooter|motor|wasserscooter/i.test(product.title), `${id} title must not describe a powered vehicle`);
 }
 
 const xml = buildGoogleShoppingFeed();
@@ -99,8 +101,16 @@ check(xml.includes(">in_stock<"), "Feed must reflect confirmed stock as in_stock
 check(xml.includes("<g:google_product_category>3320</g:google_product_category>"), "Surfboard category");
 check(!xml.includes("aggregateRating"), "Feed must not contain ratings");
 check(!xml.includes("Kundenbewertung"), "Feed must not contain review language");
-check(!xml.includes("AQV-WAVE-"), "Unverified scooters must stay out of the feed");
-check(!xml.includes("AQUAVOLT"), "The feed must not list the unverified scooter brand");
+check(xml.includes("<g:id>AQV-DRIFT-BODY-001</g:id>"), "Feed must include the bodyboard");
+check(xml.includes("<g:id>AQV-GLIDE-SKIM-001</g:id>"), "Feed must include the skimboard");
+check(!xml.includes("AQV-WAVE-"), "Old water scooters must leave the feed");
+check(!xml.includes(">1130<"), "Feed must not use the personal-watercraft vehicle category");
+check(xml.includes("<g:price>149.00 EUR</g:price>"), "Bodyboard feed price");
+check(xml.includes("<g:price>119.00 EUR</g:price>"), "Skimboard feed price");
+check(xml.includes("<g:google_product_category>6287</g:google_product_category>"), "Bodyboard category");
+check(xml.includes("<g:google_product_category>6286</g:google_product_category>"), "Skimboard category");
+check((xml.match(/<g:availability>out_of_stock<\/g:availability>/g) ?? []).length === 2, "Only the new boards are out of stock");
+check((xml.match(/<g:availability>in_stock<\/g:availability>/g) ?? []).length === 4, "The four surfboards stay in stock");
 
 for (const product of offered) {
   check(xml.includes(`<g:id>${product.id}</g:id>`), `Feed id ${product.id}`);
@@ -131,7 +141,9 @@ async function validateImages() {
       const file = path.join(process.cwd(), "public", image.src);
     const bytes = readFileSync(file);
     const meta = await sharp(bytes).metadata();
-      check((meta.width ?? 0) >= 1000 && (meta.height ?? 0) >= 1000, `${image.src} must stay at native resolution of at least 1000px`);
+      const longSide = Math.max(meta.width ?? 0, meta.height ?? 0);
+      const shortSide = Math.min(meta.width ?? 0, meta.height ?? 0);
+      check(longSide >= 1000 && shortSide >= 500, `${image.src} must keep a native long side of at least 1000px`);
       check(meta.format === "webp", `${image.src} must be webp`);
       const text = bytes.toString("latin1");
       check(/trainedAlgorithmicMedia/i.test(text), `${image.src} must keep AI source metadata`);

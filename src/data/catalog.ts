@@ -19,7 +19,7 @@ export type ProductImage = {
 };
 
 export const SURFBOARDS = "Surfboards";
-export const MINI_WATER_SCOOTERS = "Mini Water Scooters";
+export const AQUAVOLT_BOARDS = "AQUAVOLT Boards";
 
 export type Product = {
   /** Stable Google Merchant Center offer id. */
@@ -40,6 +40,8 @@ export type Product = {
   brand: string;
   productType: string;
   feedProductType: string;
+  /** Google taxonomy ID. Omit to use the surfboard category in the store config. */
+  googleProductCategoryId?: number;
   lengthLabel: string | null;
   /** Full color description shown on the page. */
   color: string;
@@ -246,62 +248,36 @@ export const products: readonly Product[] = [
     mpn: null,
   },
   {
-    id: "AQV-WAVE-MINI-001",
-    sku: "AQV-WAVE-MINI-001",
-    slug: "aquavolt-wave-mini",
-    name: "AQUAVOLT Wave Mini",
-    title: "AQUAVOLT Wave Mini kompakter Wasserscooter Weiß",
+    id: "AQV-DRIFT-BODY-001",
+    sku: "AQV-DRIFT-BODY-001",
+    slug: "aquavolt-drift-bodyboard",
+    name: "AQUAVOLT Drift",
+    title: "AQUAVOLT Drift Bodyboard Weiß",
     description:
-      "Der AQUAVOLT Wave Mini ist ein kompaktes Konzept für einen persönlichen Wasserscooter. Die Form ist auf Tragbarkeit, Lagerung und Transport ausgelegt und für Freizeit auf erlaubten Gewässern gedacht. Geschwindigkeit, Akku, Wasserdichtigkeit, Maße und der Lieferumfang sind nicht geprüft und werden deshalb nicht angegeben.",
-    cardDescription:
-      "Kompaktes Wasserscooter-Konzept in Weiß und Eisblau, gedacht für Freizeit auf erlaubten Gewässern.",
-    highlights: [
-      "Kompaktes, tragbares Konzept",
-      "Griff an der Oberseite",
-      "Stromlinienförmige Außenform",
-      "Für Freizeit auf erlaubten Gewässern",
-    ],
-    price: 499,
+      "Das AQUAVOLT Drift ist ein Bodyboard für Wellen, auf dem du liegst und selbst paddelst. Es hat keinen Motor, keinen Akku und kein Segel. Die weiße Fläche mit hellblauem Rand ist ein Konzept für Freizeit im Wasser. Maße, Material und Lieferumfang sind nicht geprüft und werden nicht angegeben.",
+    cardDescription: "Weißes Bodyboard mit hellblauem Rand. Kein Motor und kein Segel.",
+    highlights: ["Bodyboard zum Liegen", "Kein Motor", "Kein Segel", "Weiß mit hellblauem Rand"],
+    price: 149,
     currency: "EUR",
     condition: "new",
     brand: "AQUAVOLT",
-    productType: "Mini Water Scooter",
-    feedProductType: "Mini Water Scooters",
+    productType: "Bodyboard",
+    feedProductType: "Surfing > Bodyboards",
+    googleProductCategoryId: 6287,
     lengthLabel: null,
-    color: "Weiß und Eisblau",
+    color: "Weiß mit hellblauem Rand",
     feedColor: "Weiß",
     skillLevel: "Freizeit",
-    category: MINI_WATER_SCOOTERS,
-    publishToFeed: false,
-    image: "/images/products/aquavolt-wave-mini.webp",
-    imageAlt:
-      "Konzeptfoto des weißen AQUAVOLT Wave Mini Wasserscooters mit Griff, auf klarem blauem Wasser",
-    gallery: [
-      {
-        src: "/images/products/aquavolt-wave-mini-detail.webp",
-        alt: "Nahansicht des weißen AQUAVOLT Wave Mini mit Griff und Schriftzug auf blauem Wasser",
-      },
-      {
-        src: "/images/products/aquavolt-wave-mini-lake.webp",
-        alt: "Konzeptfoto des AQUAVOLT Wave Mini am Ufer eines ruhigen Sees",
-      },
-    ],
-    absentTopics: [
-      "Maße, Gewicht und Tragkraft",
-      "Geschwindigkeit und Reichweite",
-      "Akku, Ladezeit und Motorleistung",
-      "Wasserdichtigkeit und Zertifizierungen",
-      "Lieferumfang",
-      "Herstelleradresse und Garantie",
-      "GTIN und MPN",
-    ],
+    category: AQUAVOLT_BOARDS,
+    image: "/images/products/aquavolt-drift-bodyboard.webp",
+    imageAlt: "Weißes AQUAVOLT Drift Bodyboard mit hellblauem Rand im flachen Wasser",
+    absentTopics: ["Maße und Gewicht", "Material", "Lieferumfang", "Zertifizierungen", "GTIN und MPN"],
     specs: [
       { label: "Marke", value: "AQUAVOLT" },
-      { label: "SKU", value: "AQV-WAVE-MINI-001" },
-      { label: "Kategorie", value: "Mini Water Scooter" },
-      { label: "Einsatz", value: "Freizeit auf erlaubten Gewässern" },
-      { label: "Form", value: "Kompakter Entwurf mit Griff" },
-      { label: "Farbe", value: "Weiß und Eisblau, Konzeptfarbe" },
+      { label: "SKU", value: "AQV-DRIFT-BODY-001" },
+      { label: "Kategorie", value: "Bodyboard" },
+      { label: "Antrieb", value: "Keiner. Kein Motor und kein Segel." },
+      { label: "Farbe", value: "Weiß mit hellblauem Rand, Konzeptfarbe" },
     ],
     stockQuantity: null,
     detailsConfirmed: sharedUnconfirmed,
@@ -309,62 +285,36 @@ export const products: readonly Product[] = [
     mpn: null,
   },
   {
-    id: "AQV-WAVE-PRO-001",
-    sku: "AQV-WAVE-PRO-001",
-    slug: "aquavolt-wave-pro",
-    name: "AQUAVOLT Wave Pro",
-    title: "AQUAVOLT Wave Pro kompakter Wasserscooter Graphit",
+    id: "AQV-GLIDE-SKIM-001",
+    sku: "AQV-GLIDE-SKIM-001",
+    slug: "aquavolt-glide-skimboard",
+    name: "AQUAVOLT Glide",
+    title: "AQUAVOLT Glide Skimboard Sand",
     description:
-      "Der AQUAVOLT Wave Pro ist ein kompakteres Premium-Konzept für persönliche Wassermobilität. Die dunkle Form mit türkisem Streifen ist als tragbare Alternative zu größeren Wassermotorrädern gedacht, nur für Freizeit auf erlaubten Gewässern. Geschwindigkeit, Akku, Wasserdichtigkeit, Maße und der Lieferumfang sind nicht geprüft und werden nicht angegeben.",
-    cardDescription:
-      "Dunkles Wasserscooter-Konzept mit türkisem Streifen, gedacht als tragbare Freizeitform.",
-    highlights: [
-      "Kompakter Körper für den Transport",
-      "Steuergriff auf der Oberseite",
-      "Graphitfarbenes Konzept mit türkisem Streifen",
-      "Nur für erlaubte Gewässer",
-    ],
-    price: 799,
+      "Das AQUAVOLT Glide ist ein Skimboard für den flachen Auslauf am Strand. Du trägst es selbst und gleitest über das dünne Wasser. Es hat keinen Motor, keinen Akku und kein Segel. Maße, Material und Lieferumfang sind nicht geprüft und werden nicht angegeben.",
+    cardDescription: "Sandfarbenes Skimboard mit marineblauem Rand. Kein Motor und kein Segel.",
+    highlights: ["Skimboard für flaches Wasser", "Kein Motor", "Kein Segel", "Sandfarben mit marineblauem Rand"],
+    price: 119,
     currency: "EUR",
     condition: "new",
     brand: "AQUAVOLT",
-    productType: "Mini Water Scooter",
-    feedProductType: "Mini Water Scooters",
+    productType: "Skimboard",
+    feedProductType: "Surfing > Skimboards",
+    googleProductCategoryId: 6286,
     lengthLabel: null,
-    color: "Graphit mit türkisem Streifen",
-    feedColor: "Graphit",
+    color: "Sand mit marineblauem Rand",
+    feedColor: "Sand",
     skillLevel: "Freizeit",
-    category: MINI_WATER_SCOOTERS,
-    publishToFeed: false,
-    image: "/images/products/aquavolt-wave-pro.webp",
-    imageAlt:
-      "Konzeptfoto des graphitfarbenen AQUAVOLT Wave Pro Wasserscooters mit türkisem Streifen auf türkisem Wasser",
-    gallery: [
-      {
-        src: "/images/products/aquavolt-wave-pro-detail.webp",
-        alt: "Nahansicht des graphitfarbenen AQUAVOLT Wave Pro mit Steuergriff auf türkisem Wasser",
-      },
-      {
-        src: "/images/products/aquavolt-wave-pro-beach.webp",
-        alt: "Konzeptfoto des AQUAVOLT Wave Pro am Rand eines leeren Strandes",
-      },
-    ],
-    absentTopics: [
-      "Maße, Gewicht und Tragkraft",
-      "Geschwindigkeit und Reichweite",
-      "Akku, Ladezeit und Motorleistung",
-      "Wasserdichtigkeit und Zertifizierungen",
-      "Lieferumfang",
-      "Herstelleradresse und Garantie",
-      "GTIN und MPN",
-    ],
+    category: AQUAVOLT_BOARDS,
+    image: "/images/products/aquavolt-glide-skimboard.webp",
+    imageAlt: "Sandfarbenes AQUAVOLT Glide Skimboard mit marineblauem Rand am Strand",
+    absentTopics: ["Maße und Gewicht", "Material", "Lieferumfang", "Zertifizierungen", "GTIN und MPN"],
     specs: [
       { label: "Marke", value: "AQUAVOLT" },
-      { label: "SKU", value: "AQV-WAVE-PRO-001" },
-      { label: "Kategorie", value: "Mini Water Scooter" },
-      { label: "Einsatz", value: "Freizeit auf erlaubten Gewässern" },
-      { label: "Form", value: "Kompakter Entwurf mit Steuergriff" },
-      { label: "Farbe", value: "Graphit mit türkisem Streifen, Konzeptfarbe" },
+      { label: "SKU", value: "AQV-GLIDE-SKIM-001" },
+      { label: "Kategorie", value: "Skimboard" },
+      { label: "Antrieb", value: "Keiner. Kein Motor und kein Segel." },
+      { label: "Farbe", value: "Sand mit marineblauem Rand, Konzeptfarbe" },
     ],
     stockQuantity: null,
     detailsConfirmed: sharedUnconfirmed,
