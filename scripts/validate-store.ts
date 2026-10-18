@@ -20,8 +20,8 @@ function check(condition: boolean, message: string) {
   if (!condition) failures.push(message);
 }
 
-check(products.length === 6, "Catalog must contain the four boards and two scooter concepts");
-check(feedProducts().length === 6, "Boards and both scooters belong in the Google feed");
+check(products.length === 10, "Catalog must contain ten products");
+check(feedProducts().length === 10, "All ten products belong in the Google feed");
 check(new Set(products.map((product) => product.id)).size === products.length, "Product ids must be unique");
 check(new Set(products.map((product) => product.slug)).size === products.length, "Slugs must be unique");
 
@@ -109,7 +109,17 @@ check(xml.includes("<g:price>149.00 EUR</g:price>"), "Bodyboard feed price");
 check(xml.includes("<g:price>119.00 EUR</g:price>"), "Skimboard feed price");
 check(xml.includes("<g:google_product_category>6287</g:google_product_category>"), "Bodyboard category");
 check(xml.includes("<g:google_product_category>6286</g:google_product_category>"), "Skimboard category");
-check((xml.match(/<g:availability>out_of_stock<\/g:availability>/g) ?? []).length === 2, "Only the new boards are out of stock");
+check((xml.match(/<g:availability>out_of_stock<\/g:availability>/g) ?? []).length === 6, "Unconfirmed products stay out of stock");
+check(xml.includes("<g:id>TW-EXPLORER-PACK-001</g:id>"), "Feed includes the Explorer backpack");
+check(xml.includes("<g:id>TW-NOMAD-PACK-001</g:id>"), "Feed includes the Nomad backpack");
+check(xml.includes("<g:id>TW-COASTLINE-PONCHO-001</g:id>"), "Feed includes the poncho");
+check(xml.includes("<g:id>TW-SUNSET-BAG-001</g:id>"), "Feed includes the beach bag");
+check(xml.includes("<g:price>69.90 EUR</g:price>"), "Explorer price");
+check(xml.includes("<g:price>79.90 EUR</g:price>"), "Nomad price");
+check(xml.includes("<g:price>39.90 EUR</g:price>"), "Poncho price");
+check(xml.includes("<g:price>34.90 EUR</g:price>"), "Beach bag price");
+check(xml.includes("<g:google_product_category>100</g:google_product_category>"), "Backpack category");
+check(!/waterproof|wasserdicht/i.test(xml), "Feed must not claim waterproof");
 check((xml.match(/<g:availability>in_stock<\/g:availability>/g) ?? []).length === 4, "The four surfboards stay in stock");
 
 for (const product of offered) {

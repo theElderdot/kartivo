@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { ProductCard } from "@/components/ProductCard";
-import { AQUAVOLT_BOARDS, SURFBOARDS, productsInCategory } from "@/data/catalog";
+import { AQUAVOLT_BOARDS, SURFBOARDS, TROPIC_WAVE, productsInCategory } from "@/data/catalog";
 import { itemListJsonLd } from "@/lib/jsonld";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -33,7 +33,7 @@ const faqs = [
   },
   {
     q: "Sind die Produktfotos die Boards, die geliefert werden?",
-    a: "Nein. Es sind KI-generierte Konzeptfotos. Sie müssen vor dem Verkauf durch Aufnahmen der realen Boards ersetzt werden, falls die Herstellung abweicht.",
+    a: "Nein. Es sind KI-generierte Konzeptfotos. Sie müssen vor dem Verkauf durch Aufnahmen der realen Produkte ersetzt werden, falls die Herstellung abweicht.",
   },
   {
     q: "Was ist aus den Wasserscootern geworden?",
@@ -44,6 +44,7 @@ const faqs = [
 export default function HomePage() {
   const boards = productsInCategory(SURFBOARDS);
   const aquavoltBoards = productsInCategory(AQUAVOLT_BOARDS);
+  const tropicWave = productsInCategory(TROPIC_WAVE);
   return (
     <>
       <JsonLd data={itemListJsonLd()} />
@@ -103,6 +104,23 @@ export default function HomePage() {
         </div>
         <div className="product-grid product-grid-two">
           {aquavoltBoards.map((product) => (
+            <ProductCard key={product.sku} product={product} />
+          ))}
+        </div>
+      </section>
+
+      <section className="section" id="tropic-wave">
+        <div className="section-head">
+          <p className="eyebrow">TROPIC WAVE</p>
+          <h2>Strand und Reise</h2>
+          <p>
+            Explorer 69,90 Euro, Island Nomad 79,90 Euro, Coastline Poncho 39,90 Euro und Sunset
+            Flow 34,90 Euro. Der Bestand ist noch nicht bestätigt. Ein Schutz vor Wasser wird nicht
+            behauptet.
+          </p>
+        </div>
+        <div className="product-grid product-grid-two">
+          {tropicWave.map((product) => (
             <ProductCard key={product.sku} product={product} />
           ))}
         </div>

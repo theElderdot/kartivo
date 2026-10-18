@@ -51,6 +51,66 @@ const jobs = [
     description:
       "AI-generated concept photograph of the AQUAVOLT Glide skimboard. Not a photograph of a manufactured board. No motor.",
   },
+  {
+    source: "tw-explorer-main.jpg",
+    dest: "public/images/products/tw-explorer-main.webp",
+    description: "AI-generated concept photo of the TROPIC WAVE Explorer backpack. Not a manufactured product.",
+  },
+  {
+    source: "tw-explorer-beach.jpg",
+    dest: "public/images/products/tw-explorer-beach.webp",
+    description: "AI-generated beach concept photo of the TROPIC WAVE Explorer backpack.",
+  },
+  {
+    source: "tw-explorer-detail.jpg",
+    dest: "public/images/products/tw-explorer-detail.webp",
+    description: "AI-generated detail concept photo of the TROPIC WAVE Explorer backpack.",
+  },
+  {
+    source: "tw-nomad-main.jpg",
+    dest: "public/images/products/tw-nomad-main.webp",
+    description: "AI-generated concept photo of the ISLAND NOMAD backpack. Not a manufactured product.",
+  },
+  {
+    source: "tw-nomad-beach.jpg",
+    dest: "public/images/products/tw-nomad-beach.webp",
+    description: "AI-generated beach concept photo of the ISLAND NOMAD backpack.",
+  },
+  {
+    source: "tw-nomad-detail.jpg",
+    dest: "public/images/products/tw-nomad-detail.webp",
+    description: "AI-generated detail concept photo of the ISLAND NOMAD backpack.",
+  },
+  {
+    source: "tw-poncho-main.jpg",
+    dest: "public/images/products/tw-poncho-main.webp",
+    description: "AI-generated concept photo of the COASTLINE Classic poncho. Not a manufactured product.",
+  },
+  {
+    source: "tw-poncho-beach.jpg",
+    dest: "public/images/products/tw-poncho-beach.webp",
+    description: "AI-generated beach concept photo of the COASTLINE Classic poncho.",
+  },
+  {
+    source: "tw-poncho-detail.jpg",
+    dest: "public/images/products/tw-poncho-detail.webp",
+    description: "AI-generated detail concept photo of the COASTLINE Classic poncho.",
+  },
+  {
+    source: "tw-sunset-main.jpg",
+    dest: "public/images/products/tw-sunset-main.webp",
+    description: "AI-generated concept photo of the SUNSET FLOW roll-top bag. Not a manufactured product. No waterproof claim.",
+  },
+  {
+    source: "tw-sunset-beach.jpg",
+    dest: "public/images/products/tw-sunset-beach.webp",
+    description: "AI-generated beach concept photo of the SUNSET FLOW roll-top bag.",
+  },
+  {
+    source: "tw-sunset-detail.jpg",
+    dest: "public/images/products/tw-sunset-detail.webp",
+    description: "AI-generated detail concept photo of the SUNSET FLOW roll-top bag.",
+  },
 ];
 
 const digitalSource =

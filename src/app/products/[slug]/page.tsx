@@ -7,6 +7,7 @@ import { PaymentNote, ShippingNote, TaxNote } from "@/components/CommerceNotes";
 import { JsonLd } from "@/components/JsonLd";
 import {
   AQUAVOLT_BOARDS,
+  TROPIC_WAVE,
   imageCaption,
   products,
   productsInCategory,
@@ -53,7 +54,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const others = productsInCategory(productCategory(product)).filter((item) => item.sku !== product.sku);
   const images = productImages(product);
   const absentTopics = product.absentTopics ?? unverifiedSpecTopics;
-  const concept = productCategory(product) === AQUAVOLT_BOARDS;
+  const category = productCategory(product);
+  const aquavolt = category === AQUAVOLT_BOARDS;
+  const tropicWave = category === TROPIC_WAVE;
+  const concept = aquavolt || tropicWave;
   const specStatus = product.detailsConfirmed
     ? "Vom Händler bestätigt"
     : "Noch nicht an der Ware geprüft";
@@ -91,11 +95,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <p className="eyebrow">{product.skillLevel}</p>
           <h1>{product.title}</h1>
           <p className="price">{formatPrice(product.price)}</p>
-          {concept ? (
+          {aquavolt ? (
             <p className="status-note">
               Katalogpreis für ein Board ohne Motor und ohne Segel. Technische Daten und Lieferumfang
               sind nicht geprüft. Der Bestand ist noch nicht bestätigt, deshalb steht im Feed nicht
               vorrätig. Eine Bestellung ist nicht möglich.
+            </p>
+          ) : null}
+          {tropicWave ? (
+            <p className="status-note">
+              Katalogpreis. Material, Maße und ein Schutz vor Wasser sind nicht geprüft. Der Bestand
+              ist noch nicht bestätigt, deshalb steht im Feed nicht vorrätig. Eine Bestellung ist
+              nicht möglich.
             </p>
           ) : null}
           <TaxNote />
@@ -137,9 +148,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <section>
         <h2>Lieferumfang</h2>
         <p>
-          {concept
+          {aquavolt
             ? "Der Lieferumfang ist nicht bestätigt. Akku, Ladegerät und weiteres Zubehör werden nicht als enthalten angegeben."
-            : "Der Lieferumfang steht in den Katalogangaben. Nicht genannte Teile sind nicht enthalten."}
+            : tropicWave
+              ? "Der Lieferumfang ist nicht bestätigt. Nicht gezeigte Teile sind nicht enthalten."
+              : "Der Lieferumfang steht in den Katalogangaben. Nicht genannte Teile sind nicht enthalten."}
         </p>
       </section>
 
