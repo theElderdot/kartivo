@@ -89,11 +89,11 @@ for (const [id, slug, price, categoryId] of [
   check(product.currency === "EUR", `${id} currency`);
   check(product.brand === "AQUAVOLT", `${id} brand`);
   check(product.gtin === null && product.mpn === null, `${id} must not invent an identifier`);
-  check(product.stockQuantity === null, `${id} stock must stay unconfirmed`);
+  check(product.stockQuantity === 5, `${id} stock count`);
   check(product.detailsConfirmed === false, `${id} specs must stay unconfirmed`);
   check(product.publishToFeed !== false, `${id} must be in the feed`);
   check(product.googleProductCategoryId === categoryId, `${id} category`);
-  check(googleAvailability(product) === "out_of_stock", `${id} stays out of stock until a count is confirmed`);
+  check(googleAvailability(product) === "in_stock", `${id} availability follows confirmed stock`);
   check((product.gallery ?? []).length === 0, `${id} uses one image`);
   check(!/scooter|motor|wasserscooter/i.test(product.title), `${id} title must not describe a powered vehicle`);
 }
@@ -115,7 +115,7 @@ check(xml.includes("<g:price>149.00 EUR</g:price>"), "Bodyboard feed price");
 check(xml.includes("<g:price>119.00 EUR</g:price>"), "Skimboard feed price");
 check(xml.includes("<g:google_product_category>6287</g:google_product_category>"), "Bodyboard category");
 check(xml.includes("<g:google_product_category>6286</g:google_product_category>"), "Skimboard category");
-check((xml.match(/<g:availability>out_of_stock<\/g:availability>/g) ?? []).length === 6, "Unconfirmed products stay out of stock");
+check((xml.match(/<g:availability>out_of_stock<\/g:availability>/g) ?? []).length === 0, "Feed must not mark confirmed catalog items out of stock");
 check(xml.includes("<g:id>TW-EXPLORER-PACK-001</g:id>"), "Feed includes the Explorer backpack");
 check(xml.includes("<g:id>TW-NOMAD-PACK-001</g:id>"), "Feed includes the Nomad backpack");
 check(xml.includes("<g:id>TW-COASTLINE-PONCHO-001</g:id>"), "Feed includes the poncho");
@@ -126,7 +126,7 @@ check(xml.includes("<g:price>39.90 EUR</g:price>"), "Poncho price");
 check(xml.includes("<g:price>34.90 EUR</g:price>"), "Beach bag price");
 check(xml.includes("<g:google_product_category>100</g:google_product_category>"), "Backpack category");
 check(!/waterproof|wasserdicht/i.test(xml), "Feed must not claim waterproof");
-check((xml.match(/<g:availability>in_stock<\/g:availability>/g) ?? []).length === 4, "The four surfboards stay in stock");
+check((xml.match(/<g:availability>in_stock<\/g:availability>/g) ?? []).length === 10, "All ten feed products stay in stock");
 
 for (const product of offered) {
   check(xml.includes(`<g:id>${product.id}</g:id>`), `Feed id ${product.id}`);
