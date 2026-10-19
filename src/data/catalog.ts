@@ -44,6 +44,12 @@ export type Product = {
   /** Google taxonomy ID. Omit to use the surfboard category in the store config. */
   googleProductCategoryId?: number;
   lengthLabel: string | null;
+  /** Required in the feed when google_product_category is apparel (for example outerwear). */
+  apparelFeed?: {
+    ageGroup: "adult";
+    gender: "unisex";
+    size: string;
+  };
   /** Full color description shown on the page. */
   color: string;
   /** Primary color submitted to Google. */
@@ -432,6 +438,11 @@ export const products: readonly Product[] = [
     feedProductType: "Surf Accessories > Changing Poncho",
     googleProductCategoryId: 203,
     lengthLabel: null,
+    apparelFeed: {
+      ageGroup: "adult",
+      gender: "unisex",
+      size: "One size",
+    },
     color: "Ozeanblau und Sand",
     feedColor: "Blau",
     skillLevel: "Surf",

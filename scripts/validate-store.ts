@@ -119,6 +119,9 @@ check((xml.match(/<g:availability>out_of_stock<\/g:availability>/g) ?? []).lengt
 check(xml.includes("<g:id>TW-EXPLORER-PACK-001</g:id>"), "Feed includes the Explorer backpack");
 check(xml.includes("<g:id>TW-NOMAD-PACK-001</g:id>"), "Feed includes the Nomad backpack");
 check(xml.includes("<g:id>TW-COASTLINE-PONCHO-001</g:id>"), "Feed includes the poncho");
+check(xml.includes("<g:age_group>adult</g:age_group>"), "Outerwear poncho includes age_group");
+check(xml.includes("<g:gender>unisex</g:gender>"), "Outerwear poncho includes gender");
+check(xml.includes("<g:size>One size</g:size>"), "Outerwear poncho includes size");
 check(xml.includes("<g:id>TW-SUNSET-BAG-001</g:id>"), "Feed includes the beach bag");
 check(xml.includes("<g:price>69.90 EUR</g:price>"), "Explorer price");
 check(xml.includes("<g:price>79.90 EUR</g:price>"), "Nomad price");

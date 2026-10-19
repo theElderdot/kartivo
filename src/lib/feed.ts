@@ -28,7 +28,11 @@ function productItem(product: Product): string {
     `      <g:color>${escapeXml(product.feedColor)}</g:color>`,
   );
 
-  if (product.lengthLabel) {
+  if (product.apparelFeed) {
+    lines.push(`      <g:age_group>${product.apparelFeed.ageGroup}</g:age_group>`);
+    lines.push(`      <g:gender>${product.apparelFeed.gender}</g:gender>`);
+    lines.push(`      <g:size>${escapeXml(product.apparelFeed.size)}</g:size>`);
+  } else if (product.lengthLabel) {
     lines.push(`      <g:size>${escapeXml(product.lengthLabel)}</g:size>`);
   }
 
