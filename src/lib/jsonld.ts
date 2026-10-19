@@ -97,6 +97,11 @@ export function productJsonLd(product: Product) {
 
   if (product.apparelFeed) {
     data.size = product.apparelFeed.size;
+    data.audience = {
+      "@type": "PeopleAudience",
+      suggestedGender: product.apparelFeed.gender,
+      ...(product.apparelFeed.ageGroup === "adult" ? { suggestedMinAge: 18 } : {}),
+    };
   }
 
   if (product.gtin) data.gtin = product.gtin;

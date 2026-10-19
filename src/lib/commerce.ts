@@ -26,11 +26,32 @@ export function schemaAvailability(product: Product): string {
   }
 }
 
-/** German label for apparel size shown on product pages (feed keeps Google values). */
+type ApparelAge = NonNullable<Product["apparelFeed"]>["ageGroup"];
+type ApparelGender = NonNullable<Product["apparelFeed"]>["gender"];
+
+const apparelAgeLabels: Record<ApparelAge, string> = {
+  adult: "Erwachsene",
+};
+
+const apparelGenderLabels: Record<ApparelGender, string> = {
+  unisex: "Unisex",
+};
+
+/** German labels for apparel attributes (Merchant Center feed keeps Google enum values). */
 export function apparelSizeLabel(product: Product): string | null {
   if (!product.apparelFeed) return null;
   if (product.apparelFeed.size === "One size") return "Einheitsgröße";
   return product.apparelFeed.size;
+}
+
+export function apparelAgeLabel(product: Product): string | null {
+  if (!product.apparelFeed) return null;
+  return apparelAgeLabels[product.apparelFeed.ageGroup];
+}
+
+export function apparelGenderLabel(product: Product): string | null {
+  if (!product.apparelFeed) return null;
+  return apparelGenderLabels[product.apparelFeed.gender];
 }
 
 export function conceptFeedStockNote(product: Product): string {

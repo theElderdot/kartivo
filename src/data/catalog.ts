@@ -470,6 +470,8 @@ export const products: readonly Product[] = [
       { label: "Marke", value: "TROPIC WAVE" },
       { label: "SKU", value: "TW-COASTLINE-PONCHO-001" },
       { label: "Kategorie", value: "Surfponcho" },
+      { label: "Geschlecht", value: "Unisex" },
+      { label: "Altersgruppe", value: "Erwachsene" },
       { label: "Größe", value: "Einheitsgröße" },
       { label: "Form", value: "Weites Poncho mit Kapuze, Konzept" },
     ],

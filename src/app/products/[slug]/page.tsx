@@ -17,6 +17,8 @@ import {
   getProductBySlug,
 } from "@/data/catalog";
 import {
+  apparelAgeLabel,
+  apparelGenderLabel,
   apparelSizeLabel,
   conceptFeedStockNote,
   isPurchasable,
@@ -127,6 +129,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <>
                 <dt>Länge</dt>
                 <dd>{product.lengthLabel}</dd>
+              </>
+            ) : null}
+            {apparelGenderLabel(product) ? (
+              <>
+                <dt>Geschlecht</dt>
+                <dd>{apparelGenderLabel(product)}</dd>
+              </>
+            ) : null}
+            {apparelAgeLabel(product) ? (
+              <>
+                <dt>Altersgruppe</dt>
+                <dd>{apparelAgeLabel(product)}</dd>
               </>
             ) : null}
             {apparelSizeLabel(product) ? (
