@@ -16,6 +16,11 @@ The site is a preview. Checkout does not take payment, stock is unconfirmed, and
 
 The announcement bar is on because every order to Germany ships free.
 
+## Deployment
+
+- **GitHub:** [theElderdot/kartivo](https://github.com/theElderdot/kartivo) — commits from this repo use the `theElderdot` GitHub identity.
+- **Vercel:** project `kartivo` (Production → `www.kartivo.de`). Manage deploys from the Vercel account `younoushb-5677` on team YOA.
+
 ## Scripts
 
 ```bash
