@@ -7,9 +7,22 @@
  * `launchBlockers()` in src/lib/commerce.ts returns an empty list.
  */
 
-export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://kartivo.de"
-).replace(/\/$/, "");
+/** Merchant Center and Googlebot should fetch images on the canonical host (no apex redirect). */
+export function normalizeSiteUrl(raw: string): string {
+  const trimmed = raw.trim().replace(/\/$/, "");
+  if (!trimmed) return "https://www.kartivo.de";
+  try {
+    const url = new URL(trimmed);
+    if (url.hostname === "kartivo.de") url.hostname = "www.kartivo.de";
+    return url.origin;
+  } catch {
+    return trimmed;
+  }
+}
+
+export const siteUrl = normalizeSiteUrl(
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kartivo.de",
+);
 
 export const storeConfig = {
   brand: "KARTIVO",

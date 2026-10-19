@@ -4,7 +4,7 @@ import path from "node:path";
 import { XMLValidator } from "fast-xml-parser";
 import sharp from "sharp";
 import { feedProducts, productImages, products } from "../src/data/catalog";
-import { siteUrl, storeConfig } from "../src/config/store";
+import { normalizeSiteUrl, siteUrl, storeConfig } from "../src/config/store";
 import { buildGoogleShoppingFeed } from "../src/lib/feed";
 import { formatPrice } from "../src/lib/format";
 import {
@@ -19,6 +19,12 @@ const failures: string[] = [];
 function check(condition: boolean, message: string) {
   if (!condition) failures.push(message);
 }
+
+check(
+  normalizeSiteUrl("https://kartivo.de") === "https://www.kartivo.de",
+  "Apex kartivo.de must normalize to www for Merchant Center image URLs",
+);
+check(!/^https:\/\/kartivo\.de$/i.test(siteUrl), "siteUrl must not use the apex domain in feeds");
 
 check(products.length === 10, "Catalog must contain ten products");
 check(feedProducts().length === 10, "All ten products belong in the Google feed");
