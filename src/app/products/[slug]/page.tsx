@@ -16,7 +16,12 @@ import {
   unverifiedSpecTopics,
   getProductBySlug,
 } from "@/data/catalog";
-import { isPurchasable, stockLabel } from "@/lib/commerce";
+import {
+  apparelSizeLabel,
+  conceptFeedStockNote,
+  isPurchasable,
+  stockLabel,
+} from "@/lib/commerce";
 import { formatPrice } from "@/lib/format";
 import { breadcrumbJsonLd, productJsonLd } from "@/lib/jsonld";
 import { pageMetadata } from "@/lib/metadata";
@@ -98,15 +103,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
           {aquavolt ? (
             <p className="status-note">
               Katalogpreis für ein Board ohne Motor und ohne Segel. Technische Daten und Lieferumfang
-              sind nicht geprüft. Der Bestand ist noch nicht bestätigt, deshalb steht im Feed nicht
-              vorrätig. Eine Bestellung ist nicht möglich.
+              sind nicht geprüft. {conceptFeedStockNote(product)} Eine Bestellung ist nicht möglich,
+              weil die Zahlung nicht angebunden ist.
             </p>
           ) : null}
           {tropicWave ? (
             <p className="status-note">
-              Katalogpreis. Material, Maße und ein Schutz vor Wasser sind nicht geprüft. Der Bestand
-              ist noch nicht bestätigt, deshalb steht im Feed nicht vorrätig. Eine Bestellung ist
-              nicht möglich.
+              Katalogpreis. Material und ein Schutz vor Wasser sind nicht geprüft.{" "}
+              {conceptFeedStockNote(product)} Eine Bestellung ist nicht möglich, weil die Zahlung
+              nicht angebunden ist.
             </p>
           ) : null}
           <TaxNote />
@@ -122,6 +127,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <>
                 <dt>Länge</dt>
                 <dd>{product.lengthLabel}</dd>
+              </>
+            ) : null}
+            {apparelSizeLabel(product) ? (
+              <>
+                <dt>Größe</dt>
+                <dd>{apparelSizeLabel(product)}</dd>
               </>
             ) : null}
             <dt>Zustand</dt>

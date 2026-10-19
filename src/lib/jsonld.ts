@@ -95,6 +95,10 @@ export function productJsonLd(product: Product) {
     offers: offer,
   };
 
+  if (product.apparelFeed) {
+    data.size = product.apparelFeed.size;
+  }
+
   if (product.gtin) data.gtin = product.gtin;
   if (product.mpn) data.mpn = product.mpn;
   return data;

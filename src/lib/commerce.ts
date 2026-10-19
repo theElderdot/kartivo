@@ -26,6 +26,20 @@ export function schemaAvailability(product: Product): string {
   }
 }
 
+/** German label for apparel size shown on product pages (feed keeps Google values). */
+export function apparelSizeLabel(product: Product): string | null {
+  if (!product.apparelFeed) return null;
+  if (product.apparelFeed.size === "One size") return "Einheitsgröße";
+  return product.apparelFeed.size;
+}
+
+export function conceptFeedStockNote(product: Product): string {
+  if (product.stockQuantity === null) {
+    return "Der Bestand ist noch nicht bestätigt, deshalb steht im Feed nicht vorrätig.";
+  }
+  return `${product.stockQuantity} Stück sind im Feed als vorrätig hinterlegt.`;
+}
+
 export function stockLabel(product: Product): string {
   if (product.stockQuantity === null) {
     return "Bestand noch nicht bestätigt. Derzeit nicht als verfügbar gekennzeichnet.";
