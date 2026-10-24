@@ -41,6 +41,9 @@ export const metadata: Metadata = {
     images: [{ url: "/images/hero.webp", alt: "Surfer auf einer Welle im offenen Meer" }],
   },
   robots: indexing,
+  verification: {
+    google: "hrE_4J3I0q2BZkj3yeT0LhU_PzTrH2eb4ysnV655Luk",
+  },
 };
 
 export const viewport: Viewport = {
