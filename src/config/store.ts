@@ -7,13 +7,18 @@
  * `launchBlockers()` in src/lib/commerce.ts returns an empty list.
  */
 
-/** Merchant Center and Googlebot should fetch images on the canonical host (no apex redirect). */
+/** Host claimed in Google Merchant Center. Product links must use this origin. */
+const merchantSiteUrl = "https://kartivo-beta.vercel.app";
+
+/** Merchant Center rejects product links that are not on the claimed store host. */
 export function normalizeSiteUrl(raw: string): string {
   const trimmed = raw.trim().replace(/\/$/, "");
-  if (!trimmed) return "https://www.kartivo.de";
+  if (!trimmed) return merchantSiteUrl;
   try {
     const url = new URL(trimmed);
-    if (url.hostname === "kartivo.de") url.hostname = "www.kartivo.de";
+    if (url.hostname === "kartivo.de" || url.hostname === "www.kartivo.de") {
+      return merchantSiteUrl;
+    }
     return url.origin;
   } catch {
     return trimmed;
@@ -21,7 +26,7 @@ export function normalizeSiteUrl(raw: string): string {
 }
 
 export const siteUrl = normalizeSiteUrl(
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kartivo.de",
+  process.env.NEXT_PUBLIC_SITE_URL ?? merchantSiteUrl,
 );
 
 export const storeConfig = {

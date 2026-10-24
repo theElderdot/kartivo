@@ -12,14 +12,14 @@ The site is a preview. Checkout does not take payment, stock is unconfirmed, and
 4. Connect a payment provider. The checkout button does not complete an order.
 5. Have Impressum, privacy, terms, and withdrawal text reviewed for German and EU consumer law.
 6. Set `legalReviewCompleted` and `readyForLaunch` only after `npm run validate` no longer lists those gaps as open in the imprint.
-7. Submit `https://www.kartivo.de/feeds/google-shopping.xml` in Merchant Center.
+7. Submit `https://kartivo-beta.vercel.app/feeds/google-shopping.xml` in Merchant Center.
 
 The announcement bar is on because every order to Germany ships free.
 
 ## Deployment
 
 - **GitHub:** [theElderdot/kartivo](https://github.com/theElderdot/kartivo) — commits from this repo use the `theElderdot` GitHub identity.
-- **Vercel:** project `kartivo` (Production → `www.kartivo.de`). Manage deploys from the Vercel account `younoushb-5677` on team YOA.
+- **Vercel:** project `kartivo`. The claimed Merchant Center store is `https://kartivo-beta.vercel.app`. Manage deploys from the Vercel account `younoushb-5677` on team YOA.
 
 ## Scripts
 

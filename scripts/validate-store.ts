@@ -21,10 +21,14 @@ function check(condition: boolean, message: string) {
 }
 
 check(
-  normalizeSiteUrl("https://kartivo.de") === "https://www.kartivo.de",
-  "Apex kartivo.de must normalize to www for Merchant Center image URLs",
+  normalizeSiteUrl("https://kartivo.de") === "https://kartivo-beta.vercel.app",
+  "Apex kartivo.de must use the claimed Merchant Center host",
 );
-check(!/^https:\/\/kartivo\.de$/i.test(siteUrl), "siteUrl must not use the apex domain in feeds");
+check(
+  normalizeSiteUrl("https://www.kartivo.de") === "https://kartivo-beta.vercel.app",
+  "www.kartivo.de must use the claimed Merchant Center host",
+);
+check(siteUrl === "https://kartivo-beta.vercel.app", "Feed links must use the claimed Merchant Center host");
 
 check(products.length === 10, "Catalog must contain ten products");
 check(feedProducts().length === 10, "All ten products belong in the Google feed");
